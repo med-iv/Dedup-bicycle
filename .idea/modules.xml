@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Dedup-bicycle.iml" filepath="$PROJECT_DIR$/.idea/modules/Dedup-bicycle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Dedup-bycicle.iml" filepath="$PROJECT_DIR$/.idea/modules/Dedup-bycicle.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Dedup-bycicle-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Dedup-bycicle-build.iml" />
     </modules>
   </component>
