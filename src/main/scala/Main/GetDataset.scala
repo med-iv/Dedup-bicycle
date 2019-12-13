@@ -1,0 +1,138 @@
+package Main
+
+import java.io.File
+
+import Main_model.Article
+import com.github.tototoshi.csv.CSVReader
+import com.typesafe.config.ConfigFactory
+
+
+//XXX Говнокод
+
+object GetDataset {
+  val conf = ConfigFactory.load()
+
+  def getScholar() = {
+
+    val (path1: String, path2: String, pathAnswers: String) =
+      (conf.getConfig("DBLP-Scholar").getString("DBLP1"),
+        conf.getConfig("DBLP-Scholar").getString("Scholar"),
+        conf.getConfig("DBLP-Scholar").getString("Answers"))
+
+
+    val reader1 = CSVReader.open(new File(path1))
+    val reader2 = CSVReader.open(new File(path2))
+    val readerAnswers = CSVReader.open(new File(pathAnswers))
+
+    val d1 = reader1.allWithHeaders()
+    val d2 = reader2.allWithHeaders()
+
+    val ans = readerAnswers.all()
+
+    var resSeq: Seq[Article] = Seq() // последовательность id статей, как они в табличке идут
+
+    //res_ans.map{case (key, value) => println(key, value)}
+
+
+    def mapToArticle(d: List[Map[String, String]]): Map[String, Article] = {
+      var res: Map[String, Article] = Map()
+      for (row <- d) {
+        resSeq :+= Article(id = row("id"),
+          title = row("title"),
+          authors = row("authors").split(","),
+          year = row("year"),
+          blockingKey = row("title").
+            replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase())
+
+        res += (row("id") -> Article(id = row("id"),
+          title = row("title"),
+          authors = row("authors").split(","),
+          year = row("year"),
+          blockingKey = row("title").
+            replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase()))
+      }
+      res
+    }
+
+
+
+    val res1: Map[String, Article] = mapToArticle(d1)
+    val res2: Map[String, Article] = mapToArticle(d2)
+
+    var res_ans: Map[String, String] = Map() // MAP id -> статья
+    for (i <-1 until ans.length) {
+      res_ans += (ans(i)(1) -> ans(i)(0))
+      res_ans += (ans(i)(0) -> ans(i)(0))
+
+    }
+
+
+    var initFN: Int = 0
+    for (i <- resSeq.indices) {
+      for (j <- i until resSeq.length) {
+
+        initFN += {if (resSeq(i).blockingKey != resSeq(j).blockingKey &&
+          (res_ans.get(resSeq(i).id) == res_ans.get(resSeq(j).id)
+            && res_ans.get(resSeq(i).id).isDefined)) 1 else 0 }
+
+      }
+    }
+
+
+    (res1, res2, res_ans, resSeq, initFN)
+  }
+
+
+  def getACM() = {
+
+    val (path1: String, path2: String, pathAnswers: String) =
+      (conf.getConfig("DBLP-ACM").getString("ACM"),
+        conf.getConfig("DBLP-ACM").getString("DBLP2"),
+        conf.getConfig("DBLP-ACM").getString("Answers"))
+
+
+    val reader1 = CSVReader.open(new File(path1))
+    val reader2 = CSVReader.open(new File(path2))
+    val readerAnswers = CSVReader.open(new File(pathAnswers))
+
+    val d1 = reader1.allWithHeaders()
+    val d2 = reader2.allWithHeaders()
+
+    val ans = readerAnswers.all()
+
+    var resSeq: Seq[Article] = Seq() // последовательность id статей, как они в табличке идут
+    var res_ans: Map[String, String] = Map() // MAP id -> статья
+    for (i <-1 until ans.length) {
+      res_ans += (ans(i)(1) -> ans(i)(0))
+      res_ans += (ans(i)(0) -> ans(i)(0))
+    }
+    //res_ans.map{case (key, value) => println(key, value)}
+
+
+    def mapToArticle(d: List[Map[String, String]]): Map[String, Article] = {
+      var res: Map[String, Article] = Map()
+      for (row <- d) {
+        resSeq :+= Article(id = row("id"),
+          title = row("title"),
+          authors = row("authors").split(","),
+          year = row("year"),
+          blockingKey = row("title").
+            replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase())
+
+        res += (row("id") -> Article(id = row("id"),
+          title = row("title"),
+          authors = row("authors").split(","),
+          year = row("year"),
+          blockingKey = row("title").
+            replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase()))
+      }
+      res
+    }
+
+    val res1: Map[String, Article] = mapToArticle(d1)
+    val res2: Map[String, Article] = mapToArticle(d2)
+
+
+    (res1, res2, res_ans, resSeq)
+  }
+}

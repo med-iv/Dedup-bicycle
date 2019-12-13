@@ -19,3 +19,7 @@ libraryDependencies += "com.typesafe" % "config" % "1.4.0"
 
 //smile - Machine learning
 libraryDependencies += "com.github.haifengl" %% "smile-scala" % "1.5.3"
+
+resolvers += "Spark Packages Repo" at "http://dl.bintray.com/spark-packages/maven"
+
+libraryDependencies += "graphframes" % "graphframes" % "0.7.0-spark2.4-s_2.11"
