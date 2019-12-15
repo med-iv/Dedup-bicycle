@@ -68,7 +68,7 @@ object GetDataset {
 
 
     var initFN: Int = 0
-    for (i <- resSeq.indices) {
+    /*for (i <- resSeq.indices) {
       for (j <- i until resSeq.length) {
 
         initFN += {if (resSeq(i).blockingKey != resSeq(j).blockingKey &&
@@ -77,6 +77,7 @@ object GetDataset {
 
       }
     }
+    */
 
 
     (res1, res2, res_ans, resSeq, initFN)

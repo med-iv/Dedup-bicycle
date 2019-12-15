@@ -32,6 +32,8 @@ object Main extends App {
   val (dblp1Test: Map[String, Article], scholarTest: Map[String, Article],
   answersSetTest: Map[String, String], articleSeqTest: Seq[Article], initFN: Int) = GetDataset.getScholar()
 
+  println(s"initFN = ${initFN}")
+
   println("\nLoading done")
   println(Calendar.getInstance().getTime())
   println()
