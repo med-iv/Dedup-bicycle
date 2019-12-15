@@ -44,7 +44,7 @@ object TestClassifier {
       println(s"k = ${k}", seq.length)
       k += 1
 
-      implicit val graph = JanusGraphFactory.open("inmemory")
+      val graph = JanusGraphFactory.open("inmemory")
       val g = graph.traversal
       for (i <- seq.indices) {
         g.addV("vertex").property("number", i)
