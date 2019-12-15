@@ -44,7 +44,8 @@ object TestClassifier {
       println(s"k = ${k}", seq.length)
       k += 1
 
-      val g = JanusGraphFactory.open("inmemory")
+      val g= JanusGraphFactory.open("inmemory")
+
       for (i <- seq.indices) {
         val g1 = g.traversal()
         g1.addV("vertex").property("number", i).next()
@@ -53,10 +54,12 @@ object TestClassifier {
       g.tx.commit()
       val tmp = g.V().toList
       println(g.V.count)
+      println("tmp", tmp.length)
       for (elem <- tmp) {
         println(elem.valueMap)
       }
       g.tx.commit()
+      /*
       var featuresBlock: Array[Array[Double]] = Array()
       var answersBlock: Array[Int] = Array()
       for (i <- seq.indices) {
@@ -72,7 +75,7 @@ object TestClassifier {
             && answersSetTest.get(seq(i).id).isDefined) 1 else 0
 
           val v1 = g.V().has("vertex", "number", i).head
-          val v2 = g.V().has("vertex", "number", j).head
+          //val v2 = g.V().has("vertex", "number", j).head
 
           val edge12 = g.addE("edge").from(v1).to(v2).
             property(Key[Int]("correctAnswer"), answer).
@@ -89,6 +92,7 @@ object TestClassifier {
           }
         }
       }
+
       g.tx.commit()
 
       val res = g.traversal().withComputer().V().connectedComponent().
@@ -97,6 +101,7 @@ object TestClassifier {
 
 
       for (elem <- res) println(elem.valueMap)
+      */
       g.close()
     }
   }
