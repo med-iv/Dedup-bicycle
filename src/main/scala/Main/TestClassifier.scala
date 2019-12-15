@@ -3,11 +3,9 @@ package Main
 import Main_model.Article
 import info.debatty.java.stringsimilarity.{Jaccard, NormalizedLevenshtein}
 import smile.classification.Classifier
-
 import org.graphframes.GraphFrame
-import org.apache.tinkerpop.gremlin.structure.Graph
+import org.apache.tinkerpop.gremlin.structure.{Graph, VertexProperty}
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
-
 import org.apache.tinkerpop.gremlin.process
 import org.apache.tinkerpop.gremlin.process.traversal.TraversalSource
 import org.apache.tinkerpop.gremlin.process.computer.GraphFilter
@@ -98,9 +96,13 @@ object TestClassifier {
         `with`(ConnectedComponent.propertyName, "component")
       .toList.asScala.toList
 
-
-      for (elem <- res) println(elem.valueMap)
-
+      
+      val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
+      var am_comps = 0
+      for ((key, value) <- comps){
+        am_comps += 1
+      }
+      println(comps)
       g.close()
     }
   }
