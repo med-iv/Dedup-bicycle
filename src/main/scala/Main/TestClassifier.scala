@@ -77,8 +77,9 @@ object TestClassifier {
           val v2 = g.V().has("vertex", "number", j).head
 
           val edge12 = g.addE("edge").from(v1).to(v2).
-            property(Key[Int]("correctAnswer"), answer).
-            property(Key[Int]("Answer"), classifier.predict(feature))
+            property(Key[String]("correctAnswer"), answer).
+            property(Key[String]("Answer"), classifier.predict(feature)).next()
+          g.tx.commit()
 
           if (answer == 0 && classifier.predict(feature) == 0) {
             TN_c += 1
@@ -100,7 +101,7 @@ object TestClassifier {
 
 
       for (elem <- res) println(elem.valueMap)
-      
+
       g.close()
     }
   }
