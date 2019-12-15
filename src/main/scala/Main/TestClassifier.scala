@@ -51,15 +51,16 @@ object TestClassifier {
         g.addV("vertex").property("number", i).next()
         g.tx.commit()
       }
-
+      /*
       val tmp = g.V().toList.asScala.toList
       println("tmp", tmp.length)
       for (elem <- tmp) {
         println(elem.valueMap)
       }
-      /*
-      var featuresBlock: Array[Array[Double]] = Array()
-      var answersBlock: Array[Int] = Array()
+      */
+
+      //var featuresBlock: Array[Array[Double]] = Array()
+      //var answersBlock: Array[Int] = Array()
       for (i <- seq.indices) {
         for(j <- i + 1 until seq.length) {
           println(i, j)
@@ -73,7 +74,7 @@ object TestClassifier {
             && answersSetTest.get(seq(i).id).isDefined) 1 else 0
 
           val v1 = g.V().has("vertex", "number", i).head
-          //val v2 = g.V().has("vertex", "number", j).head
+          val v2 = g.V().has("vertex", "number", j).head
 
           val edge12 = g.addE("edge").from(v1).to(v2).
             property(Key[Int]("correctAnswer"), answer).
@@ -93,13 +94,13 @@ object TestClassifier {
 
       g.tx.commit()
 
-      val res = g.traversal().withComputer().V().connectedComponent().
+      val res = g.withComputer().V().connectedComponent().
         `with`(ConnectedComponent.propertyName, "component")
       .toList.asScala.toList
 
 
       for (elem <- res) println(elem.valueMap)
-      */
+      
       g.close()
     }
   }
