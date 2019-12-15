@@ -39,15 +39,15 @@ object TestClassifier {
     var k = 0
 
     for ((key, seq) <- articlesTest) {
-      if (seq.length > 1) {
-        println(s"k = ${k}")
-        k += 1
-      }
+      println(s"k = ${k}", seq.length)
+      k += 1
+
       implicit val graph = JanusGraphFactory.open("inmemory")
       val g = graph.traversal.withComputer()
       for (i <- seq.indices) {
         g.addV(i.toString)
       }
+      g.tx.commit()
       var featuresBlock: Array[Array[Double]] = Array()
       var answersBlock: Array[Int] = Array()
       for (i <- seq.indices) {
@@ -80,6 +80,7 @@ object TestClassifier {
           }
         }
       }
+      g.tx.commit()
 
       import scala.collection.JavaConverters._
       val res = g.V().connectedComponent().
