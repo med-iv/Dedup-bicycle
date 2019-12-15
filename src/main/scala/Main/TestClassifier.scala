@@ -47,7 +47,7 @@ object TestClassifier {
       val graph = JanusGraphFactory.open("inmemory")
       val g = graph.traversal
       for (i <- seq.indices) {
-        g.addV("vertex").property("number", i)
+        graph.addVertex(i).property("number", i)
       }
       g.tx.commit()
       val tmp = g.V().toList.asScala.toList
