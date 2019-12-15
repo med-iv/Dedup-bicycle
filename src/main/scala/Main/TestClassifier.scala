@@ -70,15 +70,15 @@ object TestClassifier {
             l.distance(seq(i).year, seq(j).year)
           )
 
-          val answer = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
+          val answer: Int = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
             && answersSetTest.get(seq(i).id).isDefined) 1 else 0
 
           val v1 = g.V().has("vertex", "number", i).head
           val v2 = g.V().has("vertex", "number", j).head
 
           val edge12 = g.addE("edge").from(v1).to(v2).
-            property(Key[String]("correctAnswer"), answer).
-            property(Key[String]("Answer"), classifier.predict(feature)).next()
+            property(Key[Int]("correctAnswer"), answer).
+            property(Key[Int]("Answer"), classifier.predict(feature))
           g.tx.commit()
 
           if (answer == 0 && classifier.predict(feature) == 0) {
