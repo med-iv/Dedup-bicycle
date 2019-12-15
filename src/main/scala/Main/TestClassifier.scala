@@ -46,7 +46,9 @@ object TestClassifier {
 
       val g = JanusGraphFactory.open("inmemory")
       for (i <- seq.indices) {
-        g.addVertex()
+        val g1 = g.traversal()
+        g1.addV("vertex").property("number", i).next()
+        g1.tx.commit()
       }
       g.tx.commit()
       val tmp = g.V().toList
