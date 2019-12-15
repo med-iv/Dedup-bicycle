@@ -2,7 +2,7 @@ name := "Dedup-bycicle"
 
 version := "0.1"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.11"
 
 
 resolvers += "central" at "http://repo1.maven.org/maven2/"
@@ -23,3 +23,7 @@ libraryDependencies += "com.github.haifengl" %% "smile-scala" % "1.5.3"
 resolvers += "Spark Packages Repo" at "http://dl.bintray.com/spark-packages/maven"
 
 libraryDependencies += "graphframes" % "graphframes" % "0.7.0-spark2.4-s_2.11"
+
+libraryDependencies += "com.michaelpollmeier" %% "gremlin-scala" % "3.4.4.2"
+
+libraryDependencies += "org.janusgraph" % "janusgraph-core" % "0.2.0"
