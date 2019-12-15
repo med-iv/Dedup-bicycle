@@ -44,14 +44,13 @@ object TestClassifier {
       println(s"k = ${k}", seq.length)
       k += 1
 
-      val graph = JanusGraphFactory.open("inmemory")
-      val g = graph.traversal
+      val g = JanusGraphFactory.open("inmemory")
       for (i <- seq.indices) {
-        graph.addVertex(i).property("number", i)
+        g.addVertex()
       }
       g.tx.commit()
-      val tmp = g.V().toList.asScala.toList
-      println(tmp.length)
+      val tmp = g.V().toList
+      println(g.V.count)
       for (elem <- tmp) {
         println(elem.valueMap)
       }
@@ -90,7 +89,7 @@ object TestClassifier {
       }
       g.tx.commit()
 
-      val res = g.withComputer().V().connectedComponent().
+      val res = g.traversal().withComputer().V().connectedComponent().
         `with`(ConnectedComponent.propertyName, "component")
       .toList.asScala.toList
 
