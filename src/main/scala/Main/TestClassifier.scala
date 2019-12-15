@@ -47,13 +47,13 @@ object TestClassifier {
       implicit val graph = JanusGraphFactory.open("inmemory")
       val g = graph.traversal
       for (i <- seq.indices) {
-        g.addV(i.toString)
+        g.addV("vertex").property("number", i)
       }
       g.tx.commit()
       val tmp = g.V().toList.asScala.toList
       println(tmp.length)
       for (elem <- tmp) {
-        println(elem.label())
+        println(elem.valueMap)
       }
       g.tx.commit()
       var featuresBlock: Array[Array[Double]] = Array()
@@ -70,8 +70,8 @@ object TestClassifier {
           val answer = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
             && answersSetTest.get(seq(i).id).isDefined) 1 else 0
 
-          val v1 = g.V().hasLabel(i.toString).head
-          val v2 = g.V().hasLabel(j.toString).head
+          val v1 = g.V().has("vertex", "number", i).head
+          val v2 = g.V().has("vertex", "number", j).head
 
           val edge12 = g.addE("edge").from(v1).to(v2).
             property(Key[Int]("correctAnswer"), answer).
