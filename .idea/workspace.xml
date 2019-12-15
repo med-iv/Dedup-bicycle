@@ -56,8 +56,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="98" column="6" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
+            <state relative-caret-position="1501">
+              <caret line="142" column="21" lean-forward="true" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="21" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
               </folding>
@@ -66,22 +66,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/traversal/dsl/graph/GraphTraversal.java">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="2549" column="75" lean-forward="true" selection-start-line="2549" selection-start-column="75" selection-end-line="2549" selection-end-column="75" />
+            <state relative-caret-position="209">
+              <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#14#33#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/computer/traversal/step/map/ConnectedComponentVertexProgramStep.java">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/Main/Main.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="53" column="34" lean-forward="true" selection-start-line="53" selection-start-column="34" selection-end-line="53" selection-end-column="34" />
+            <state relative-caret-position="210">
+              <caret line="122" column="70" selection-start-line="122" selection-start-column="63" selection-end-line="122" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -97,8 +97,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>List</find>
-      <find>indi</find>
       <find>answer</find>
       <find>println</find>
       <find>pred</find>
@@ -127,6 +125,8 @@
       <find>GraphC</find>
       <find>withC</find>
       <find>The provided key/value array must have a String, T, or Traversal on even array indices</find>
+      <find>hasLa</find>
+      <find>groupBy</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4.jar!/org/apache/tinkerpop/gremlin/process/computer/clustering/connected</dir>
@@ -203,6 +203,21 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dedup-bycicle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Dedup-bicycle" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dedup-bycicle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Dedup-bicycle" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="Main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Dedup-bycicle" type="b2602c69:ProjectViewProjectNode" />
@@ -390,9 +405,9 @@
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Learn" order="3" />
-      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.8089261" visible="true" weight="0.11969697" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.8089261" visible="true" weight="0.19090909" />
       <window_info id="Designer" order="5" />
-      <window_info id="Structure" order="6" sideWeight="0.19107392" side_tool="true" visible="true" weight="0.11969697" />
+      <window_info id="Structure" order="6" sideWeight="0.19107392" side_tool="true" visible="true" weight="0.19090909" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.043290045" />
@@ -415,7 +430,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Gradle" order="3" />
-      <window_info active="true" anchor="right" id="sbt" order="4" visible="true" weight="0.022727273" />
+      <window_info anchor="right" id="sbt" order="4" visible="true" weight="0.022727273" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
       <window_info anchor="right" id="Maven" order="6" weight="0.016008537" />
       <window_info anchor="right" id="Palette" order="7" />
@@ -641,16 +656,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-          <folding>
-            <element signature="e#14#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/traversal/TraversalSource.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -686,13 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/Main.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1292">
-          <caret line="32" column="86" lean-forward="true" selection-start-line="32" selection-start-column="86" selection-end-line="32" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/traversal/step/map/AddVertexStartStep.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -704,23 +702,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="37" column="33" lean-forward="true" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/structure/Element.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1596">
-          <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/traversal/dsl/graph/GraphTraversal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="2549" column="75" lean-forward="true" selection-start-line="2549" selection-start-column="75" selection-end-line="2549" selection-end-column="75" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -745,10 +726,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/structure/Element.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="76" column="35" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding>
+            <element signature="e#14#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/Main.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="122" column="70" selection-start-line="122" selection-start-column="63" selection-end-line="122" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/traversal/dsl/graph/GraphTraversal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="777" column="46" selection-start-line="777" selection-start-column="46" selection-end-line="777" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="98" column="6" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
+        <state relative-caret-position="1501">
+          <caret line="142" column="21" lean-forward="true" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="21" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
           </folding>

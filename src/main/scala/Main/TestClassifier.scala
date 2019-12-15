@@ -74,9 +74,15 @@ object TestClassifier {
           val v1 = g.V().has("myvertex", "number", i).head
           val v2 = g.V().has("myvertex", "number", j).head
 
-          val edge12 = g.addE("myedge").property("Answer",
-            Array(answer, classifier.predict(feature))).from(v1).to(v2).next()
-          g.tx.commit()
+          if (classifier.predict(feature) == 1) {
+            val edge12 = g.addE("edge1").property("answer",
+              answer).from(v1).to(v2).next()
+            g.tx.commit()
+          } else {
+            val edge12 = g.addE("edge0").property("answer",
+              answer).from(v1).to(v2).next()
+            g.tx.commit()
+          }
 
           if (answer == 0 && classifier.predict(feature) == 0) {
             TN_c += 1
@@ -84,7 +90,7 @@ object TestClassifier {
             FP_c += 1
           } else if (answer == 1 && classifier.predict(feature) == 0) {
             FN_c += 1
-          } else if (answer == 1 && classifier.predict(feature) == 1) {
+          } else {
             TP_c += 1
           }
         }
@@ -92,19 +98,54 @@ object TestClassifier {
 
       g.tx.commit()
 
-      val res = g.withComputer().V().connectedComponent().
+      val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
         `with`(ConnectedComponent.propertyName, "component")
       .toList.asScala.toList
 
-      
+
       val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
       var am_comps = 0
-      for ((key, value) <- comps){
+      println(comps)
+      for ((key, value) <- comps) {
         am_comps += 1
       }
-      println(comps)
+      for (i1 <- res.indices) {
+        for (j1 <- i1 until res.length) {
+          val ed: Edge = g.V().has("number", i1)
+            .outE("myedge").as("ed")
+            .inV().has("number", j1).select("ed").head()
+
+          if (res(i1).property("component") == res(j1).property("component")
+            && ed.value("answer") == 0) {
+            FP_g += 1
+          } else if (res(i1).property("component") == res(j1).property("component")
+          && ed.value("answer") == 1) {
+            TP_g += 1
+          } else if (res(i1).property("component") != res(j1).property("component")
+            && ed.value("answer") == 1) {
+            FN_g += 1
+          } else {
+            TN_g += 1
+          }
+        }
+      }
+      println(s"amount components = ${ am_comps }")
       g.close()
     }
+    val prec_c = TP_c / (TP_c + FP_c)
+    val rec_c = TP_c / (TP_c + FN_c)
+    val F1_c = 2 * (prec_c * rec_c) / (prec_c + rec_c)
+    println(s"precision_c = ${prec_c}")
+    println(s"recall_c = ${rec_c}")
+    println(s"F1_c = ${F1_c}")
+
+    val prec_g = TP_g / (TP_g + FP_g)
+    val rec_g = TP_g / (TP_g + FN_g)
+    val F1_g = 2 * (prec_g * rec_g) / (prec_g + rec_g)
+    println(s"precision_g = ${prec_g}")
+    println(s"recall_g = ${rec_g}")
+    println(s"F1_g = ${F1_g}")
+
   }
 
 }
