@@ -77,7 +77,7 @@ object TestClassifier {
 
       import scala.collection.JavaConverters._
       val res = g.V().connectedComponent().
-        `with`(ConnectedComponent.propertyName, Key[String]("component"))
+        `with`(ConnectedComponent.propertyName, "component")
       .toList.asScala.toList
 
 
