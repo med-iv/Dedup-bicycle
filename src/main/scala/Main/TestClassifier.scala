@@ -49,7 +49,9 @@ object TestClassifier {
       for (i <- seq.indices) {
         g.addV(i.toString)
       }
+      g.tx.commit()
       val tmp = g.V().toList.asScala.toList
+      println(tmp.length)
       for (elem <- tmp) {
         println(elem.label())
       }
