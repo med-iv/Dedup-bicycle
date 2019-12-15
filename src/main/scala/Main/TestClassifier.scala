@@ -36,8 +36,13 @@ object TestClassifier {
 
     println(name)
 
+    var k = 0
 
     for ((key, seq) <- articlesTest) {
+      if (seq.length > 1) {
+        println(s"k = ${k}")
+        k += 1
+      }
       implicit val graph = JanusGraphFactory.open("inmemory")
       val g = graph.traversal.withComputer()
       for (i <- seq.indices) {
@@ -47,7 +52,7 @@ object TestClassifier {
       var answersBlock: Array[Int] = Array()
       for (i <- seq.indices) {
         for(j <- i + 1 until seq.length) {
-          //println(i, j)
+          println(i, j)
           val feature = Array[Double](
             l.distance(seq(i).title, seq(j).title),
             jaccard.distance(seq(i).authors.mkString(","), seq(j).authors.mkString(",")),
