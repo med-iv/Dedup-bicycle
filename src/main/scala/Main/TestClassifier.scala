@@ -39,7 +39,7 @@ object TestClassifier {
     var k = 0
 
     for ((key, seq) <- articlesTest) {
-      println(s"${key} = ${k}", seq.length) 
+      println(s"${key} = ${k}", seq.length)
       k += 1
 
       val graph = JanusGraphFactory.open("inmemory")
@@ -77,6 +77,7 @@ object TestClassifier {
           if (classifier.predict(feature) == 1) {
             val edge12 = g.addE("edge1").property("answer",
               answer).from(v1).to(v2).next()
+              println("answer 1")
             g.tx.commit()
           } else {
             val edge12 = g.addE("edge0").property("answer",
@@ -101,7 +102,7 @@ object TestClassifier {
       val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
         `with`(ConnectedComponent.propertyName, "component")
       .toList.asScala.toList
-
+      println(res.length)
 
       val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
       var am_comps = 0
@@ -110,7 +111,7 @@ object TestClassifier {
         am_comps += 1
       }
       for (i1 <- res.indices) {
-        for (j1 <- i1 until res.length) {
+        for (j1 <- i1 + 1 until res.length) {
           val ed: Edge = g.V().has("number", i1)
             .outE("myedge").as("ed")
             .inV().has("number", j1).select("ed").head()
