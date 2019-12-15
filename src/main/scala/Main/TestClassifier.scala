@@ -6,9 +6,10 @@ import smile.classification.Classifier
 
 import org.graphframes.GraphFrame
 import org.apache.tinkerpop.gremlin.structure.Graph
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph._
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
+
 import org.apache.tinkerpop.gremlin.process
-import org.apache.tinkerpop.gremlin.process.traversal._
+import org.apache.tinkerpop.gremlin.process.traversal.TraversalSource
 import org.apache.tinkerpop.gremlin.process.computer.GraphFilter
 import org.apache.tinkerpop.gremlin.process.computer.clustering.connected._
 import org.apache.tinkerpop.gremlin.process.computer.traversal.step.map.ConnectedComponent
@@ -38,7 +39,7 @@ object TestClassifier {
 
     for ((key, seq) <- articlesTest) {
       implicit val graph = JanusGraphFactory.open("inmemory")
-      val g = graph.traversal
+      val g = graph.traversal.withComputer()
       for (i <- seq.indices) {
         g.addV(i.toString)
       }
