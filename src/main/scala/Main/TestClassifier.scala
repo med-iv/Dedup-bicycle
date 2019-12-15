@@ -73,10 +73,10 @@ object TestClassifier {
           val answer: Int = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
             && answersSetTest.get(seq(i).id).isDefined) 1 else 0
 
-          val v1 = g.V().has("vertex", "number", i).head
-          val v2 = g.V().has("vertex", "number", j).head
+          val v1 = g.V().has("myvertex", "number", i).head
+          val v2 = g.V().has("myvertex", "number", j).head
 
-          val edge12 = g.addE("edge").property("Answer",
+          val edge12 = g.addE("myedge").property("Answer",
             Array(answer, classifier.predict(feature))).from(v1).to(v2).next()
           g.tx.commit()
 
