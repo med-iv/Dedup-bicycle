@@ -48,7 +48,7 @@ object TestClassifier {
       val g = graph.traversal()
       for (i <- seq.indices) {
 
-        g.addV("vertex").property("number", i).next()
+        g.addV("myvertex").property("number", i).next()
         g.tx.commit()
       }
       /*
