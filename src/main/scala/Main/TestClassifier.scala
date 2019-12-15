@@ -39,7 +39,7 @@ object TestClassifier {
     var k = 0
 
     for ((key, seq) <- articlesTest) {
-      println(s"k = ${k}", seq.length)
+      println(s"${key} = ${k}", seq.length) 
       k += 1
 
       val graph = JanusGraphFactory.open("inmemory")

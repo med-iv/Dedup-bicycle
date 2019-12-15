@@ -53,14 +53,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1501">
-              <caret line="142" column="21" lean-forward="true" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="21" />
+            <state relative-caret-position="247">
+              <caret line="100" column="6" selection-start-line="100" selection-start-column="6" selection-end-line="101" selection-end-column="60" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GG.sc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" column="54" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -92,6 +101,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Scala Class" />
+        <option value="Scala Script" />
+        <option value="Scala Worksheet" />
       </list>
     </option>
   </component>
@@ -154,6 +165,8 @@
         <option value="$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Main/Main.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/Main/gg.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/Main/GG.sc" />
       </list>
     </option>
   </component>
@@ -399,15 +412,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-26" width="1368" height="795" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Learn" order="3" />
-      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.8089261" visible="true" weight="0.19090909" />
+      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.8072034" visible="true" weight="0.19090909" />
       <window_info id="Designer" order="5" />
-      <window_info id="Structure" order="6" sideWeight="0.19107392" side_tool="true" visible="true" weight="0.19090909" />
+      <window_info id="Structure" order="6" sideWeight="0.1927966" side_tool="true" visible="true" weight="0.19090909" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.043290045" />
@@ -423,7 +435,7 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="12" />
       <window_info anchor="bottom" id="Build" order="13" weight="0.31241283" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.34199134" />
+      <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.34170154" />
       <window_info anchor="bottom" id="Terminal" order="15" />
       <window_info anchor="bottom" id="Dependency Viewer" order="16" weight="0.32900432" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -439,8 +451,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/haifengl/smile-scala_2.12/1.5.2/smile-scala_2.12-1.5.2-sources.jar!/smile/plot/Operators.scala" />
-    <entry file="file://$PROJECT_DIR$/file.out" />
     <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/info/debatty/java-string-similarity/1.2.1/java-string-similarity-1.2.1-sources.jar!/info/debatty/java/stringsimilarity/Levenshtein.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -760,13 +770,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/gg.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="59" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1501">
-          <caret line="142" column="21" lean-forward="true" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="21" />
+        <state relative-caret-position="247">
+          <caret line="100" column="6" selection-start-line="100" selection-start-column="6" selection-end-line="101" selection-end-column="60" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GG.sc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="54" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
         </state>
       </provider>
     </entry>
