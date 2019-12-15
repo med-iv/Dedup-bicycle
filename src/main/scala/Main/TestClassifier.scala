@@ -16,6 +16,8 @@ import org.apache.tinkerpop.gremlin.process.computer.traversal.step.map.Connecte
 import gremlin.scala._
 import org.janusgraph.core.JanusGraphFactory
 
+import scala.collection.JavaConverters._
+
 
 object TestClassifier {
   val l = new NormalizedLevenshtein()
@@ -43,9 +45,13 @@ object TestClassifier {
       k += 1
 
       implicit val graph = JanusGraphFactory.open("inmemory")
-      val g = graph.traversal.withComputer()
+      val g = graph.traversal
       for (i <- seq.indices) {
         g.addV(i.toString)
+      }
+      val tmp = g.V().toList.asScala.toList
+      for (elem <- tmp) {
+        println(elem.label())
       }
       g.tx.commit()
       var featuresBlock: Array[Array[Double]] = Array()
@@ -82,14 +88,13 @@ object TestClassifier {
       }
       g.tx.commit()
 
-      import scala.collection.JavaConverters._
-      val res = g.V().connectedComponent().
+      val res = g.withComputer().V().connectedComponent().
         `with`(ConnectedComponent.propertyName, "component")
       .toList.asScala.toList
 
 
       for (elem <- res) println(elem.valueMap)
-
+      g.close()
     }
   }
 
