@@ -2,7 +2,7 @@ name := "Dedup-bycicle"
 
 version := "0.1"
 
-scalaVersion := "2.11.13"
+scalaVersion := "2.11.11"
 
 
 resolvers += "central" at "http://repo1.maven.org/maven2/"
