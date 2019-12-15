@@ -77,8 +77,7 @@ object TestClassifier {
           val v2 = g.V().has("vertex", "number", j).head
 
           val edge12 = g.addE("edge").from(v1).to(v2).
-            property(Key[Int]("correctAnswer"), answer).
-            property(Key[Int]("Answer"), classifier.predict(feature))
+            property(Key[Tuple2[Int, Int]]("Answer"), (answer, classifier.predict(feature))).next()
           g.tx.commit()
 
           if (answer == 0 && classifier.predict(feature) == 0) {
