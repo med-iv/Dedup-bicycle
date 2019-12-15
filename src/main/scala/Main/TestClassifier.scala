@@ -44,21 +44,19 @@ object TestClassifier {
       println(s"k = ${k}", seq.length)
       k += 1
 
-      val g= JanusGraphFactory.open("inmemory")
-
+      val graph = JanusGraphFactory.open("inmemory")
+      val g = graph.traversal()
       for (i <- seq.indices) {
-        val g1 = g.traversal()
-        g1.addV("vertex").property("number", i).next()
-        g1.tx.commit()
+
+        g.addV("vertex").property("number", i).next()
+        g.tx.commit()
       }
-      g.tx.commit()
-      val tmp = g.V().toList
-      println(g.V.count)
+
+      val tmp = g.V().toList.asScala.toList
       println("tmp", tmp.length)
       for (elem <- tmp) {
         println(elem.valueMap)
       }
-      g.tx.commit()
       /*
       var featuresBlock: Array[Array[Double]] = Array()
       var answersBlock: Array[Int] = Array()
