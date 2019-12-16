@@ -31,7 +31,6 @@ object GetDataset {
 
     var resSeq: Seq[Article] = Seq() // последовательность id статей, как они в табличке идут
 
-    //res_ans.map{case (key, value) => println(key, value)}
 
 
     def mapToArticle(d: List[Map[String, String]]): Map[String, Article] = {
@@ -59,25 +58,21 @@ object GetDataset {
     val res1: Map[String, Article] = mapToArticle(d1)
     val res2: Map[String, Article] = mapToArticle(d2)
 
-    var res_ans: Map[String, String] = Map() // MAP id -> статья
-    for (i <-1 until ans.length) {
+    var initFN: Int = 0
+
+    var res_ans: Map[String, String] = Map()
+    res_ans += ans(1)(1) -> ans(1)(0)
+    res_ans += ans(1)(0) -> ans(1)(0)
+    for (i <-2 until ans.length) {
+      initFN += {if (ans(i)(0) == ans(i - 1)(0) && res2(ans(i)(1)).blockingKey != res2(ans(i - 1)(1)).blockingKey) 1 else 0}
       res_ans += (ans(i)(1) -> ans(i)(0))
       res_ans += (ans(i)(0) -> ans(i)(0))
 
     }
 
 
-    var initFN: Int = 0
-    /*for (i <- resSeq.indices) {
-      for (j <- i until resSeq.length) {
 
-        initFN += {if (resSeq(i).blockingKey != resSeq(j).blockingKey &&
-          (res_ans.get(resSeq(i).id) == res_ans.get(resSeq(j).id)
-            && res_ans.get(resSeq(i).id).isDefined)) 1 else 0 }
 
-      }
-    }
-    */
 
 
     (res1, res2, res_ans, resSeq, initFN)
@@ -107,7 +102,6 @@ object GetDataset {
       res_ans += (ans(i)(1) -> ans(i)(0))
       res_ans += (ans(i)(0) -> ans(i)(0))
     }
-    //res_ans.map{case (key, value) => println(key, value)}
 
 
     def mapToArticle(d: List[Map[String, String]]): Map[String, Article] = {

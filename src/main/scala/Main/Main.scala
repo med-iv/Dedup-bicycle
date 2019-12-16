@@ -125,7 +125,7 @@ object Main extends App {
 
   TestClassifier.test(svmmachine, articlesTest, answersSetTest, initFN, "SVM")
 
-  //TestClassifier.test(svmmachine, articlesTest, answersSetTest, InitFN, "Logit")
+  //TestClassifier.test(logreg, articlesTest, answersSetTest, InitFN, "Logit")
 
 
 
