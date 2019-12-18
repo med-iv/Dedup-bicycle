@@ -76,7 +76,7 @@ object Main extends App {
 
 
   val logreg: LogisticRegression = logit(featuresTrain, answersTrain)
-  println("Logreg train done")
+  println("Logreg training done")
   println(Calendar.getInstance().getTime())
   println()
 
@@ -91,7 +91,7 @@ object Main extends App {
 
 
   val svmachine = svm[Array[Double]](featuresTrain, answersTrain, new LinearKernel(), 0.1)
-  println("SVM train done")
+  println("SVM training done")
   println(Calendar.getInstance().getTime())
   println()
 
@@ -115,8 +115,14 @@ object Main extends App {
 
   val forest = randomForest(featuresTrain, answersTrain, ntrees = 2000)
 
-  TestClassifier.test(forest, articlesTest, answersSetTest, initFN, "forest")
+  println("Random forest training done")
+  println(Calendar.getInstance().getTime())
+  println()
 
+
+  TestClassifier.test(forest, articlesTest, answersSetTest, initFN, "forest")
+  println(Calendar.getInstance().getTime())
+  println()
 
 
 
