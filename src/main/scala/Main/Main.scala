@@ -9,7 +9,7 @@ import smile.math.kernel.LinearKernel
 
 
 import info.debatty.java.stringsimilarity.{Levenshtein, Jaccard, Cosine, NormalizedLevenshtein}
-import smile.classification.{svm, lda, cart, logit}
+import smile.classification.{svm, lda, cart, logit, randomForest}
 import smile.validation.{cv, FMeasure, Accuracy, Recall}
 import smile.plot.plot
 
@@ -38,7 +38,6 @@ object Main extends App {
   println(Calendar.getInstance().getTime())
   println()
 
-/*
   val l = new NormalizedLevenshtein()
   val jaccard = new Jaccard()
 
@@ -51,7 +50,6 @@ object Main extends App {
   try {
     var i: Int = 0
     for ((key1, article1) <- acmTrain) {
-      var j = 0
       for ((key2, article2) <- dblp2Train) {
         featuresTrain :+= Array[Double](
           l.distance(article1.title, article2.title),
@@ -59,16 +57,7 @@ object Main extends App {
           l.distance(article1.year, article2.year)
         )
         answersTrain :+= {if (answersSetTrain.get(key1).isDefined && answersSetTrain(key1) == key2) 1 else 0}
-        //if (answersTrain.length != featuresTrain.length) println(k)
-        //featuresTrain(k).foreach(println(_))
-        //println(answersTrain(k))
-        //println(featuresTrain.length)
-        //println(answersTrain.length)
-        j += 1
       }
-      //println(s"j:${j}")
-      i += 1
-      println(s"i:${i}")
     }
   } catch {
     case e => println(e.toString)
@@ -83,50 +72,50 @@ object Main extends App {
 
 
   //////////////////////////////////////////////////////////////////////////////////////
+  val articlesTest: Map[String, Seq[Article]] = articleSeqTest.groupBy(_.blockingKey)
+
 
   val logreg: LogisticRegression = logit(featuresTrain, answersTrain)
+  println("Logreg train done")
   println(Calendar.getInstance().getTime())
   println()
+
   val oos0 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/logreg.out"))
   oos0.writeObject(logreg)
 
+  TestClassifier.test(logreg, articlesTest, answersSetTest, initFN, "Logreg")
+
+
+  println(Calendar.getInstance().getTime())
+  println()
 
 
   val svmachine = svm[Array[Double]](featuresTrain, answersTrain, new LinearKernel(), 0.1)
+  println("SVM train done")
+  println(Calendar.getInstance().getTime())
+  println()
 
   val oos1 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/svm.out"))
   oos1.writeObject(svmachine)
 
-  cv(featuresTrain, answersTrain, 2, new Accuracy, new Recall, new FMeasure) {case (x: Array[Array[Double]], y: Array[Int]) =>
-    svm[Array[Double]](x, y, new LinearKernel(), 0.1)}
+  //cv(featuresTrain, answersTrain, 2, new Accuracy, new Recall, new FMeasure) {case (x: Array[Array[Double]], y: Array[Int]) =>
+    //svm[Array[Double]](x, y, new LinearKernel(), 0.1)}
 
-  //////////////////////////////////////////////////////////////////////////
-  /*
-  *
-  * Validation
 
-  */
-
- */
-
+/*
   val ois = new ObjectInputStream(new FileInputStream("src/main/resources/svm.out"))
-  val svmmachine: SVM[Array[Double]] = ois.readObject.asInstanceOf[SVM[Array[Double]]]
+  val svmachine: SVM[Array[Double]] = ois.readObject.asInstanceOf[SVM[Array[Double]]]
+*/
 
 
+  TestClassifier.test(svmachine, articlesTest, answersSetTest, initFN, "SVM")
   println(Calendar.getInstance().getTime())
   println()
 
 
+  val forest = randomForest(featuresTrain, answersTrain, ntrees = 2000)
 
-
-
-  val articlesTest: Map[String, Seq[Article]] = articleSeqTest.groupBy(_.blockingKey)
-
-
-  TestClassifier.test(svmmachine, articlesTest, answersSetTest, initFN, "SVM")
-
-  //TestClassifier.test(logreg, articlesTest, answersSetTest, InitFN, "Logit")
-
+  TestClassifier.test(forest, articlesTest, answersSetTest, initFN, "forest")
 
 
 

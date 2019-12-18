@@ -41,7 +41,7 @@ object TestClassifier {
     for ((key, seq) <- articlesTest) {
       k += 1
 
-      if (seq.length > 1) {
+      if (seq.length > 1 && k < 32700) {
         println(s"${key} = ${k}", seq.length)
         val graph = JanusGraphFactory.open("inmemory")
         val g = graph.traversal()
@@ -117,7 +117,7 @@ object TestClassifier {
             }
           }
         }
-        g.close()
+        graph.close()
       }
     }
     val prec_c = TP_c / (TP_c + FP_c)
