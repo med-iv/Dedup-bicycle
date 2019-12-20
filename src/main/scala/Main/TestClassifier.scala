@@ -105,23 +105,23 @@ object TestClassifier {
 
           for (i1 <- res.indices) {
             for (j1 <- i1 + 1 until res.length) {
-              val ed: Edge = g.V().has("number", res(i1).property("number"))
+              val ed: Edge = g.V().has("number", res(i1).value("number").asInstanceOf[Int])
                 .outE().as("ed")
-                .inV().has("number", res(j1).property("number")).select("ed").headOption()
-                .getOrElse(g.V().has("number", res(j1).property("number"))
+                .inV().has("number", res(j1).value("number").asInstanceOf[Int]).select("ed").headOption()
+                .getOrElse(g.V().has("number", res(j1).value("number").asInstanceOf[Int])
                 .outE().as("ed")
-                .inV().has("number", res(i1).property("number")).select("ed").head()
+                .inV().has("number", res(i1).value("number").asInstanceOf[Int]).select("ed").head()
                 )
 
-              if (res(i1).property("component") == res(j1).property("component")
+              if (res(i1).value("component") == res(j1).value("component")
                 && ed.value("answer") == 0) {
                 FP_g += 1
                 println("FP_g", FP_g)
-              } else if (res(i1).property("component") == res(j1).property("component")
+              } else if (res(i1).value("component") == res(j1).value("component")
                 && ed.value("answer") == 1) {
                 TP_g += 1
                 println("TP_g", TP_g)
-              } else if (res(i1).property("component") != res(j1).property("component")
+              } else if (res(i1).value("component") != res(j1).value("component")
                 && ed.value("answer") == 1) {
                 FN_g += 1
                 println("FN_g", FN_g)
