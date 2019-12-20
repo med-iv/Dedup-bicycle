@@ -105,15 +105,14 @@ object TestClassifier {
 
           for (i1 <- res.indices) {
             for (j1 <- i1 + 1 until res.length) {
-              val ed_val: Int = g.V().has("number", res(i1).value("number").asInstanceOf[Int])
+              val ed_val: Int = (g.V().has("number", res(i1).value("number").asInstanceOf[Int])
                 .outE().as("ed")
                 .inV().has("number", res(j1).value("number").asInstanceOf[Int]).select("ed")
-                .value("answer").headOption().asInstanceOf[Option[Int]]
+                .value("answer").headOption()
                 .getOrElse(g.V().has("number", res(j1).value("number").asInstanceOf[Int])
                 .outE().as("ed")
                 .inV().has("number", res(i1).value("number").asInstanceOf[Int]).select("ed")
-                  .value("answer").head().asInstanceOf[Int]
-                )
+                  .value("answer").head())).asInstanceOf[Int]
 
               if (res(i1).value("component") == res(j1).value("component")
                 && ed_val == 0) {
