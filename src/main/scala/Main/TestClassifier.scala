@@ -108,11 +108,11 @@ object TestClassifier {
               val ed_val: Int = (g.V().has("number", res(i1).value("number").asInstanceOf[Int])
                 .outE().as("ed")
                 .inV().has("number", res(j1).value("number").asInstanceOf[Int]).select("ed")
-                .value("answer").headOption()
+                  .valueOption("answer").headOption()
                 .getOrElse(g.V().has("number", res(j1).value("number").asInstanceOf[Int])
                 .outE().as("ed")
                 .inV().has("number", res(i1).value("number").asInstanceOf[Int]).select("ed")
-                  .value("answer").head())).asInstanceOf[Int]
+                  .valueOption("answer").head)).asInstanceOf[Int]
 
               if (res(i1).value("component") == res(j1).value("component")
                 && ed_val == 0) {
