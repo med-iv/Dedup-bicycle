@@ -104,7 +104,7 @@ object Main extends App {
   //val logreg: LogisticRegression = ois1.readObject.asInstanceOf[LogisticRegression]
 
 
-  val forest =  randomForest(featuresTrain, answersTrain, ntrees = 2000)
+  val forest =  randomForest(featuresTrain, answersTrain, ntrees = 70)
 
   println("Random forest training done")
   println(Calendar.getInstance().getTime())
