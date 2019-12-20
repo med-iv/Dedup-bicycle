@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="630f4864-bb7c-4342-8c6c-bc66fbc731f2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules/ivan-Dedup-bycicle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ivan-Dedup-bycicle.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/streams/compile/compileIncremental/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/compileIncremental/_global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/streams/compile/copyResources/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/copyResources/_global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/Main/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Main/Main.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala" afterDir="false" />
     </list>
@@ -42,14 +46,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Main/Main.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
-              <caret line="115" column="19" lean-forward="true" selection-start-line="115" selection-start-column="19" selection-end-line="115" selection-end-column="19" />
-              <folding>
-                <element signature="e#14#47#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="402">
+              <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
             </state>
           </provider>
         </entry>
@@ -57,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="43" column="28" lean-forward="true" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="37" />
+            <state relative-caret-position="-160">
+              <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
               </folding>
@@ -66,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-127">
-              <caret line="66" column="124" selection-start-line="66" selection-start-column="124" selection-end-line="66" selection-end-column="124" />
+            <state relative-caret-position="573">
+              <caret line="144" column="38" lean-forward="true" selection-start-line="144" selection-start-column="38" selection-end-line="144" selection-end-column="38" />
               <folding>
                 <element signature="e#14#33#0" expanded="true" />
               </folding>
@@ -81,7 +82,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
+            <state relative-caret-position="209">
               <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
             </state>
           </provider>
@@ -109,7 +110,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>answer</find>
       <find>pred</find>
       <find>svm</find>
       <find>smile</find>
@@ -139,6 +139,7 @@
       <find>hasLa</find>
       <find>groupBy</find>
       <find>println</find>
+      <find>select</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4.jar!/org/apache/tinkerpop/gremlin/process/computer/clustering/connected</dir>
@@ -165,9 +166,9 @@
         <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/main/scala/Main/gg.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Main/GG.sc" />
-        <option value="$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Main/Main.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala" />
       </list>
     </option>
   </component>
@@ -186,9 +187,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="CatdeaLogs" />
       <pane id="PackagesPane" />
+      <pane id="CatdeaLogs" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -206,6 +206,13 @@
               <item name="Dedup-bycicle" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dedup-bycicle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Dedup-bycicle" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Dedup-bycicle" type="b2602c69:ProjectViewProjectNode" />
@@ -238,6 +245,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Course" />
     </panes>
   </component>
@@ -359,13 +367,13 @@
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Learn" order="3" />
-      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.7962963" visible="true" weight="0.1755603" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.79626334" visible="true" weight="0.17769477" />
       <window_info id="Designer" order="5" />
-      <window_info id="Structure" order="6" sideWeight="0.2037037" side_tool="true" visible="true" weight="0.1755603" />
+      <window_info id="Structure" order="6" sideWeight="0.20373665" side_tool="true" visible="true" weight="0.17769477" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.043290045" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37544483" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.14946619" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -393,7 +401,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/haifengl/smile-core/1.5.2/smile-core-1.5.2-sources.jar!/smile/validation/CrossValidation.java" />
     <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/haifengl/smile-scala_2.12/1.5.2/smile-scala_2.12-1.5.2-sources.jar!/smile/validation/Operators.scala" />
     <entry file="file://$PROJECT_DIR$/src/main/scala/Training/Averaged_perceptron.scala" />
     <entry file="file://$PROJECT_DIR$/src/main/scala/Preprocessing/Preprocessor.scala" />
@@ -499,7 +506,6 @@
     <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/computer/clustering/connected/ConnectedComponentVertexProgram.java" />
     <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/computer/traversal/step/map/ConnectedComponentVertexProgramStep.java" />
     <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/structure/Element.java" />
-    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/traversal/dsl/graph/GraphTraversal.java" />
     <entry file="file://$PROJECT_DIR$/src/main/scala/Main/gg.scala" />
     <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GG.sc" />
     <entry file="file://$PROJECT_DIR$/file.out">
@@ -507,9 +513,30 @@
         <state relative-caret-position="-100671" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/janusgraph/janusgraph-core/0.2.0/janusgraph-core-0.2.0-sources.jar!/org/janusgraph/core/JanusGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="133" column="16" selection-start-line="133" selection-start-column="16" selection-end-line="133" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/haifengl/smile-scala_2.11/1.5.3/smile-scala_2.11-1.5.3-sources.jar!/smile/classification/Operators.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="641" column="6" selection-start-line="641" selection-start-column="6" selection-end-line="641" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.11/scala-library-2.11.11-sources.jar!/scala/Array.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
           <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
         </state>
       </provider>
@@ -521,46 +548,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala">
+    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/tinkerpop/gremlin-core/3.4.4/gremlin-core-3.4.4-sources.jar!/org/apache/tinkerpop/gremlin/process/traversal/dsl/graph/GraphTraversal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-127">
-          <caret line="66" column="124" selection-start-line="66" selection-start-column="124" selection-end-line="66" selection-end-column="124" />
-          <folding>
-            <element signature="e#14#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/org/janusgraph/janusgraph-core/0.2.0/janusgraph-core-0.2.0-sources.jar!/org/janusgraph/core/JanusGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="133" column="16" selection-start-line="133" selection-start-column="16" selection-end-line="133" selection-end-column="16" />
+        <state relative-caret-position="326">
+          <caret line="769" column="54" selection-start-line="769" selection-start-column="54" selection-end-line="769" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Main/TestClassifier.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="43" column="28" lean-forward="true" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="37" />
+        <state relative-caret-position="-160">
+          <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/haifengl/smile-scala_2.11/1.5.3/smile-scala_2.11-1.5.3-sources.jar!/smile/classification/Operators.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/Main.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="641" column="6" selection-start-line="641" selection-start-column="6" selection-end-line="641" selection-end-column="6" />
+        <state relative-caret-position="402">
+          <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/Main.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Main/GetDataset.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="115" column="19" lean-forward="true" selection-start-line="115" selection-start-column="19" selection-end-line="115" selection-end-column="19" />
+        <state relative-caret-position="573">
+          <caret line="144" column="38" lean-forward="true" selection-start-line="144" selection-start-column="38" selection-end-line="144" selection-end-column="38" />
           <folding>
-            <element signature="e#14#47#0" expanded="true" />
+            <element signature="e#14#33#0" expanded="true" />
           </folding>
         </state>
       </provider>

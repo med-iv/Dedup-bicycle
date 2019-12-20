@@ -4,7 +4,7 @@ import com.github.tototoshi.csv._
 import java.io._
 
 import Main_model.Article
-import smile.classification.{LogisticRegression, SVM}
+import smile.classification.{Classifier, LogisticRegression, SVM}
 import smile.math.kernel.LinearKernel
 
 
@@ -25,8 +25,10 @@ object Main extends App {
   println(Calendar.getInstance().getTime())
   println()
 
-  val (acmTrain: Map[String, Article], dblp2Train: Map[String, Article],
-       answersSetTrain: Map[String, String], articleSeqPreTrain: Seq[Article]) = GetDataset.getACM()
+
+  val (//acmTrain: Map[String, Article], dblp2Train: Map[String, Article],
+       //answersSetTrain: Map[String, String], articleSeqPreTrain: Seq[Article]
+        featuresTrain: Array[Array[Double]], answersTrain: Array[Int]) = GetDataset.getACM()
 
 
   val (dblp1Test: Map[String, Article], scholarTest: Map[String, Article],
@@ -38,15 +40,13 @@ object Main extends App {
   println(Calendar.getInstance().getTime())
   println()
 
-  val l = new NormalizedLevenshtein()
-  val jaccard = new Jaccard()
 
 
 
-  var featuresTrain: Array[Array[Double]] = Array()
-  var answersTrain: Array[Int] = Array()
 
 
+
+/*
   try {
     var i: Int = 0
     for ((key1, article1) <- acmTrain) {
@@ -62,32 +62,24 @@ object Main extends App {
   } catch {
     case e => println(e.toString)
   }
+  */
   println(featuresTrain.length)
   println(answersTrain.length)
-
+/*
   println("\nAdding features for training done")
   println(Calendar.getInstance().getTime())
   println()
-
-
-
-  //////////////////////////////////////////////////////////////////////////////////////
-  val articlesTest: Map[String, Seq[Article]] = articleSeqTest.groupBy(_.blockingKey)
-
+*/
 
   val logreg: LogisticRegression = logit(featuresTrain, answersTrain)
   println("Logreg training done")
   println(Calendar.getInstance().getTime())
   println()
 
+
   val oos0 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/logreg.out"))
   oos0.writeObject(logreg)
 
-  TestClassifier.test(logreg, articlesTest, answersSetTest, initFN, "Logreg")
-
-
-  println(Calendar.getInstance().getTime())
-  println()
 
 
   val svmachine = svm[Array[Double]](featuresTrain, answersTrain, new LinearKernel(), 0.1)
@@ -95,29 +87,46 @@ object Main extends App {
   println(Calendar.getInstance().getTime())
   println()
 
-  val oos1 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/svm.out"))
-  oos1.writeObject(svmachine)
+   val oos1 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/svm.out"))
+   oos1.writeObject(svmachine)
+
+
 
   //cv(featuresTrain, answersTrain, 2, new Accuracy, new Recall, new FMeasure) {case (x: Array[Array[Double]], y: Array[Int]) =>
     //svm[Array[Double]](x, y, new LinearKernel(), 0.1)}
 
 
-/*
-  val ois = new ObjectInputStream(new FileInputStream("src/main/resources/svm.out"))
-  val svmachine: SVM[Array[Double]] = ois.readObject.asInstanceOf[SVM[Array[Double]]]
-*/
 
+  //val ois0 = new ObjectInputStream(new FileInputStream("src/main/resources/svm.out"))
+  //val svmachine: SVM[Array[Double]] = ois0.readObject.asInstanceOf[SVM[Array[Double]]]
+
+  //val ois1 = new ObjectInputStream(new FileInputStream("src/main/resources/logreg.out"))
+  //val logreg: LogisticRegression = ois1.readObject.asInstanceOf[LogisticRegression]
+
+
+  val forest =  randomForest(featuresTrain, answersTrain, ntrees = 2000)
+
+  println("Random forest training done")
+  println(Calendar.getInstance().getTime())
+  println()
+  val oos2 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/forest.out"))
+  oos2.writeObject(forest)
+ 
+
+
+
+  val articlesTest: Map[String, Seq[Article]] = articleSeqTest.groupBy(_.blockingKey)
+
+  TestClassifier.test(logreg, articlesTest, answersSetTest, initFN, "Logreg")
+  println(Calendar.getInstance().getTime())
+  println()
 
   TestClassifier.test(svmachine, articlesTest, answersSetTest, initFN, "SVM")
   println(Calendar.getInstance().getTime())
   println()
 
 
-  val forest = randomForest(featuresTrain, answersTrain, ntrees = 2000)
 
-  println("Random forest training done")
-  println(Calendar.getInstance().getTime())
-  println()
 
 
   TestClassifier.test(forest, articlesTest, answersSetTest, initFN, "forest")

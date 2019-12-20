@@ -37,89 +37,114 @@ object TestClassifier {
     println(name)
 
     var k = 0
+    //try {
+      for ((key, seq) <- articlesTest) {
+        k += 1
 
-    for ((key, seq) <- articlesTest) {
-      k += 1
+        if (seq.length > 1 && k < 2000) {
+          println(s"${key} = ${k}", seq.length)
+          val graph = JanusGraphFactory.open("inmemory")
+          val g = graph.traversal()
+          for (i <- seq.indices) {
 
-      if (seq.length > 1 && k < 32700) {
-        println(s"${key} = ${k}", seq.length)
-        val graph = JanusGraphFactory.open("inmemory")
-        val g = graph.traversal()
-        for (i <- seq.indices) {
+            g.addV("myvertex").property("number", i).next()
+            g.tx.commit()
+          }
 
-          g.addV("myvertex").property("number", i).next()
+
+          for (i <- seq.indices) {
+            for (j <- i + 1 until seq.length) {
+              val feature = Array[Double](
+                l.distance(seq(i).title, seq(j).title),
+                jaccard.distance(seq(i).authors.mkString(","), seq(j).authors.mkString(",")),
+                l.distance(seq(i).year, seq(j).year)
+              )
+
+              val answer: Int = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
+                && answersSetTest.get(seq(i).id).isDefined) 1 else 0
+
+              val v1 = g.V().has("myvertex", "number", i).head
+              val v2 = g.V().has("myvertex", "number", j).head
+
+              if (classifier.predict(feature) == 1) {
+                val edge12 = g.addE("edge1").property("answer",
+                  answer).from(v1).to(v2).next()
+                g.tx.commit()
+              } else {
+                val edge12 = g.addE("edge0").property("answer",
+                  answer).from(v1).to(v2).next()
+                g.tx.commit()
+              }
+
+              if (answer == 0 && classifier.predict(feature) == 0) {
+                TN_c += 1
+                println("TN_c", TN_c)
+              } else if (answer == 0 && classifier.predict(feature) == 1) {
+                FP_c += 1
+                println("FP_c", FP_c)
+              } else if (answer == 1 && classifier.predict(feature) == 0) {
+                FN_c += 1
+                println("FN_c", FN_c)
+              } else {
+                TP_c += 1
+                println("TP_c", TP_c)
+              }
+            }
+          }
+
           g.tx.commit()
-        }
 
 
-        for (i <- seq.indices) {
-          for (j <- i + 1 until seq.length) {
-            val feature = Array[Double](
-              l.distance(seq(i).title, seq(j).title),
-              jaccard.distance(seq(i).authors.mkString(","), seq(j).authors.mkString(",")),
-              l.distance(seq(i).year, seq(j).year)
-            )
+          val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
+            `with`(ConnectedComponent.propertyName, "component")
+            .toList.asScala.toList
+          println("res.length", res.length)
 
-            val answer: Int = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
-              && answersSetTest.get(seq(i).id).isDefined) 1 else 0
-
-            val v1 = g.V().has("myvertex", "number", i).head
-            val v2 = g.V().has("myvertex", "number", j).head
-
-            if (classifier.predict(feature) == 1) {
-              val edge12 = g.addE("edge1").property("answer",
-                answer).from(v1).to(v2).next()
-              g.tx.commit()
-            } else {
-              val edge12 = g.addE("edge0").property("answer",
-                answer).from(v1).to(v2).next()
-              g.tx.commit()
-            }
-
-            if (answer == 0 && classifier.predict(feature) == 0) {
-              TN_c += 1
-            } else if (answer == 0 && classifier.predict(feature) == 1) {
-              FP_c += 1
-            } else if (answer == 1 && classifier.predict(feature) == 0) {
-              FN_c += 1
-            } else {
-              TP_c += 1
-            }
-          }
-        }
-
-        g.tx.commit()
-
-        val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
-          `with`(ConnectedComponent.propertyName, "component")
-          .toList.asScala.toList
-
-        //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
+          //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
 
 
-        for (i1 <- res.indices) {
-          for (j1 <- i1 + 1 until res.length) {
-            val ed: Edge = g.V().has("number", i1)
-              .outE("myedge").as("ed")
-              .inV().has("number", j1).select("ed").head()
+          for (i1 <- res.indices) {
+            for (j1 <- i1 + 1 until res.length) {
+              val ed: Edge = g.V().has("number", res(i1).property("number"))
+                .outE().as("ed")
+                .inV().has("number", res(j1).property("number")).select("ed").headOption()
+                .getOrElse(g.V().has("number", res(j1).property("number"))
+                .outE().as("ed")
+                .inV().has("number", res(i1).property("number")).select("ed").head()
+                )
 
-            if (res(i1).property("component") == res(j1).property("component")
-              && ed.value("answer") == 0) {
-              FP_g += 1
-            } else if (res(i1).property("component") == res(j1).property("component")
-              && ed.value("answer") == 1) {
-              TP_g += 1
-            } else if (res(i1).property("component") != res(j1).property("component")
-              && ed.value("answer") == 1) {
-              FN_g += 1
-            } else {
-              TN_g += 1
+              if (res(i1).property("component") == res(j1).property("component")
+                && ed.value("answer") == 0) {
+                FP_g += 1
+                println("FP_g", FP_g)
+              } else if (res(i1).property("component") == res(j1).property("component")
+                && ed.value("answer") == 1) {
+                TP_g += 1
+                println("TP_g", TP_g)
+              } else if (res(i1).property("component") != res(j1).property("component")
+                && ed.value("answer") == 1) {
+                FN_g += 1
+                println("FN_g", FN_g)
+              } else {
+                TN_g += 1
+                println("TN_g", TN_g)
+              }
             }
           }
+          graph.close()
         }
-        graph.close()
       }
-    }
+   // } catch {
+     // case e: => println(e.toString)
+    //}
+    println(s"TP_c = ${TP_c}")
+    println(s"FP_c = ${FP_c}")
+    println(s"TN_c = ${TN_c}")
+    println(s"FN_c = ${FN_c}")
+    println(s"TP_g = ${TP_g}")
+    println(s"FP_g = ${FP_g}")
+    println(s"TN_g = ${TN_g}")
+    println(s"FN_g = ${FN_g}")
     val prec_c = TP_c / (TP_c + FP_c)
     val rec_c = TP_c / (TP_c + FN_c)
     val F1_c = 2 * (prec_c * rec_c) / (prec_c + rec_c)
