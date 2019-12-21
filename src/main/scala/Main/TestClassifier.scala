@@ -42,7 +42,7 @@ object TestClassifier {
         k += 1
 
         if (seq.length > 1 && k < 2000) {
-          println(s"${key} = ${k}", seq.length)
+          //println(s"${key} = ${k}", seq.length)
           val graph = JanusGraphFactory.open("inmemory")
           val g = graph.traversal()
           for (i <- seq.indices) {
@@ -69,28 +69,28 @@ object TestClassifier {
               if (classifier.predict(feature) == 1) {
                 val edge12 = g.addE("edge1").property("answer",
                   answer).from(v1).to(v2).next()
-                println(edge12)
+                //println(edge12)
                 g.tx.commit()
               } else {
                 val edge12 = g.addE("edge0").property("answer",
                   answer).from(v1).to(v2).next()
-                println(edge12)
+                //println(edge12)
                 println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
                 g.tx.commit()
               }
 
               if (answer == 0 && classifier.predict(feature) == 0) {
                 TN_c += 1
-                println("TN_c", TN_c)
+                //println("TN_c", TN_c)
               } else if (answer == 0 && classifier.predict(feature) == 1) {
                 FP_c += 1
-                println("FP_c", FP_c)
+                //println("FP_c", FP_c)
               } else if (answer == 1 && classifier.predict(feature) == 0) {
                 FN_c += 1
-                println("FN_c", FN_c)
+                //println("FN_c", FN_c)
               } else {
                 TP_c += 1
-                println("TP_c", TP_c)
+                //println("TP_c", TP_c)
               }
             }
           }
@@ -124,18 +124,18 @@ object TestClassifier {
               if (pr1 == pr2
                 && ed_val == 0) {
                 FP_g += 1
-                println("FP_g", FP_g)
+                //println("FP_g", FP_g)
               } else if (res(i1).value("component") == res(j1).value("component")
                 && ed_val == 1) {
                 TP_g += 1
-                println("TP_g", TP_g)
+                //println("TP_g", TP_g)
               } else if (res(i1).value("component") != res(j1).value("component")
                 && ed_val == 1) {
                 FN_g += 1
-                println("FN_g", FN_g)
+                //println("FN_g", FN_g)
               } else {
                 TN_g += 1
-                println("TN_g", TN_g)
+                //println("TN_g", TN_g)
               }
             }
           }
