@@ -71,7 +71,7 @@ object Main extends App {
   println()
 */
 
-  val logreg: LogisticRegression = logit(featuresTrain, answersTrain)
+/*  val logreg: LogisticRegression = logit(featuresTrain, answersTrain)
   println("Logreg training done")
   println(Calendar.getInstance().getTime())
   println()
@@ -79,7 +79,7 @@ object Main extends App {
 
   val oos0 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/logreg.out"))
   oos0.writeObject(logreg)
-
+*/
 
 
   val svmachine = svm[Array[Double]](featuresTrain, answersTrain, new LinearKernel(), 0.1)
@@ -117,13 +117,13 @@ object Main extends App {
 
   val articlesTest: Map[String, Seq[Article]] = articleSeqTest.groupBy(_.blockingKey)
 
-  TestClassifier.test(logreg, articlesTest, answersSetTest, initFN, "Logreg")
-  println(Calendar.getInstance().getTime())
-  println()
+  //TestClassifier.test(logreg, articlesTest, answersSetTest, initFN, "Logreg")
+  //println(Calendar.getInstance().getTime())
+  //println()
 
-  TestClassifier.test(svmachine, articlesTest, answersSetTest, initFN, "SVM")
-  println(Calendar.getInstance().getTime())
-  println()
+  //TestClassifier.test(svmachine, articlesTest, answersSetTest, initFN, "SVM")
+  //println(Calendar.getInstance().getTime())
+  //println()
 
 
 
