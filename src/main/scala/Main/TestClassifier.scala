@@ -99,9 +99,9 @@ object TestClassifier {
             `with`(ConnectedComponent.propertyName, "component").dedup()
             .toList.asScala.toList
           println("res.length", res.length)
-          println(res)
 
-          //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
+          val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
+          println(comps)
 
 
           for (i1 <- res.indices) {
@@ -116,8 +116,7 @@ object TestClassifier {
                   .head().asInstanceOf[Edge])
 
               val ed_val: Int = edge.value("answer").asInstanceOf[Int]
-              val pr1 = res(i1).value(ConnectedComponent.propertyName)
-              val pr2 = res(j1).value(ConnectedComponent.propertyName)
+
               println("component", pr1, pr2)
               println("ed_val", ed_val)
               if (pr1 == pr2
