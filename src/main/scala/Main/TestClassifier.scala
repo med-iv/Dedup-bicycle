@@ -105,19 +105,18 @@ object TestClassifier {
           */
 
 
-          val res1 = g.withComputer().V().connectedComponent()
+          val res = g.withComputer().V().connectedComponent()
             .group().by(ConnectedComponent.component)
-            .select(values).unfold()
-          println(res1)
-          val res = res1.toList.asScala.toList
+            .select(values).toList.asScala.toList.asInstanceOf[List[List[Vertex]]]
           println(res)
+          //println(res)
           //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           //println(comps)
           //if (comps.size > 1) {
             //println("Big size")
           //}
 
-
+/*
 
           for (i1 <- res.indices) {
             for (j1 <- i1 + 1 until res.length) {
@@ -153,7 +152,7 @@ object TestClassifier {
                 //println("TN_g", TN_g)
               }
             }
-          }
+          }*/
           graph.close()
         }
       }
