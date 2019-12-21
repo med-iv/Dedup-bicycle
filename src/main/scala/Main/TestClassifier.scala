@@ -76,7 +76,7 @@ object TestClassifier {
                 val edge12 = g.addE("edge0").property("answer",
                   answer).from(v1).to(v2).next()
                 //println(edge12)
-                //println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+                println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
                 g.tx.commit()
               }
 
