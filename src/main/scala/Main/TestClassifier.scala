@@ -116,7 +116,10 @@ object TestClassifier {
                   .head().asInstanceOf[Edge])
 
               val ed_val: Int = edge.value("answer").asInstanceOf[Int]
-              if (res(i1).value("component") == res(j1).value("component")
+              println("component",
+                res(i1).value("component").asInstanceOf[Int], res(j1).value("component").asInstanceOf[Int])
+              println("ed_val", ed_val)
+              if (res(i1).value("component").asInstanceOf[Int] == res(j1).value("component").asInstanceOf[Int]
                 && ed_val == 0) {
                 FP_g += 1
                 println("FP_g", FP_g)
