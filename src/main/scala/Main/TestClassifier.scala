@@ -96,7 +96,7 @@ object TestClassifier {
 
 
           val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
-            `with`(ConnectedComponent.propertyName, "component")
+            `with`(ConnectedComponent.propertyName, "component").dedup()
             .toList.asScala.toList
           println("res.length", res.length)
           println(res)
