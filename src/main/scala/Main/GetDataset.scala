@@ -141,7 +141,7 @@ object GetDataset {
       //res_ans += (ans(i)(1) -> ans(i)(0))
       //res_ans += (ans(i)(0) -> ans(i)(0))
       val article1: Article = res1(ans(i)(1))
-      println(i, article1.title)
+      //println(i, article1.title)
       val article2: Article = res2(ans(i)(0))
       featuresTrain :+= Array[Double](
         l.distance(article1.title, article2.title),
