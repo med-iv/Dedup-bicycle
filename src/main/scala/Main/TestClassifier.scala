@@ -98,7 +98,7 @@ object TestClassifier {
           val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
             `with`(ConnectedComponent.propertyName, "component").dedup()
             .toList.asScala.toList
-          res(0).valueMap.foreach(case (key, value) => println(key, value))
+          println(res(0).keys())
           val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           println(comps)
 
