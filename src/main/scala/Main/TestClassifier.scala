@@ -69,10 +69,12 @@ object TestClassifier {
               if (classifier.predict(feature) == 1) {
                 val edge12 = g.addE("edge1").property("answer",
                   answer).from(v1).to(v2).next()
+                println(edge12)
                 g.tx.commit()
               } else {
                 val edge12 = g.addE("edge0").property("answer",
                   answer).from(v1).to(v2).next()
+                println(edge12)
                 g.tx.commit()
               }
 
@@ -92,13 +94,12 @@ object TestClassifier {
             }
           }
 
-          g.tx.commit()
-
 
           val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
             `with`(ConnectedComponent.propertyName, "component")
             .toList.asScala.toList
           println("res.length", res.length)
+          println(res)
 
           //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property("component"))
 
