@@ -41,7 +41,7 @@ object TestClassifier {
       for ((key, seq) <- articlesTest) {
         k += 1
 
-        if (seq.length > 1 && k < 2000) {
+        if (seq.length > 1) {
           //println(s"${key} = ${k}", seq.length)
           val graph = JanusGraphFactory.open("inmemory")
           val g = graph.traversal()
