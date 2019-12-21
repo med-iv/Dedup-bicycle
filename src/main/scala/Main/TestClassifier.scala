@@ -42,7 +42,7 @@ object TestClassifier {
         k += 1
 
         if (seq.length > 1) {
-          println(s"${key} = ${k}", seq.length)
+          //println(s"${key} = ${k}", seq.length)
           val graph = JanusGraphFactory.open("inmemory")
           val g = graph.traversal()
           for (i <- seq.indices) {
@@ -75,7 +75,7 @@ object TestClassifier {
                 val edge12 = g.addE("edge0").property("answer",
                   answer).from(v1).to(v2).next()
                 //println(edge12)
-                println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+                //println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
                 g.tx.commit()
               }
 
@@ -96,12 +96,17 @@ object TestClassifier {
           }
 
 
-          val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
-            `with`(ConnectedComponent.propertyName, "component").dedup()
+          val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent()
+            //.`with`(ConnectedComponent.propertyName, "component")
+            .dedup()
             .toList.asScala.toList
           println(res)
           val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           println(comps)
+          if (comps.size > 1) {
+            println("Big size")
+          }
+
 
 
           for (i1 <- res.indices) {
@@ -118,11 +123,11 @@ object TestClassifier {
               val ed_val: Int = edge.value("answer").asInstanceOf[Int]
 
               val pr1 = res(i1).property("component")
-              val pr2 = res(j1).property("component")
+              val pr2 = res(j1).property(ConnectedComponent.propertyName)
               println("component", pr1, pr2)
-              println("ed_val", ed_val)
-              if (pr1 == pr2
-                && ed_val == 0) {
+              //println("ed_val", ed_val)
+              if (pr1 == pr2 &&
+                ed_val == 0) {
                 FP_g += 1
                 //println("FP_g", FP_g)
               } else if (res(i1).value("component") == res(j1).value("component")
