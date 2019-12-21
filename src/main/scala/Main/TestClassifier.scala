@@ -75,6 +75,7 @@ object TestClassifier {
                 val edge12 = g.addE("edge0").property("answer",
                   answer).from(v1).to(v2).next()
                 println(edge12)
+                println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
                 g.tx.commit()
               }
 
@@ -95,8 +96,8 @@ object TestClassifier {
           }
 
 
-          val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
-            `with`(ConnectedComponent.propertyName, "component").dedup()
+          val res = g.withComputer().V().outE().hasLabel("edge1").bothV().dedup().connectedComponent().
+            `with`(ConnectedComponent.propertyName, "component")
             .toList.asScala.toList
           println(res(0).keys())
           val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
