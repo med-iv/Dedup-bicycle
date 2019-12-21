@@ -117,9 +117,9 @@ object TestClassifier {
 
               val ed_val: Int = edge.value("answer").asInstanceOf[Int]
               println("component",
-                res(i1).value("component").asInstanceOf[Int], res(j1).value("component").asInstanceOf[Int])
+                res(i1).value("component"), res(j1).value("component"))
               println("ed_val", ed_val)
-              if (res(i1).value("component").asInstanceOf[Int] == res(j1).value("component").asInstanceOf[Int]
+              if (res(i1).value("component") == res(j1).value("component")
                 && ed_val == 0) {
                 FP_g += 1
                 println("FP_g", FP_g)
