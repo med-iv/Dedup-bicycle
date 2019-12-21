@@ -122,8 +122,8 @@ object TestClassifier {
 
               val ed_val: Int = edge.value("answer").asInstanceOf[Int]
 
-              val pr1 = res(i1).property("component")
-              val pr2 = res(j1).property(ConnectedComponent.propertyName)
+              val pr1 = res(i1).value(ConnectedComponent.propertyName)
+              val pr2 = res(j1).value(ConnectedComponent.propertyName)
               println("component", pr1, pr2)
               //println("ed_val", ed_val)
               if (pr1 == pr2 &&
