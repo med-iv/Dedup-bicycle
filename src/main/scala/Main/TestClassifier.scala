@@ -99,9 +99,9 @@ object TestClassifier {
           val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent().
             `with`(ConnectedComponent.propertyName, "component").dedup()
             .toList.asScala.toList
-          println(res(0).keys())
-          val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
-          println(comps)
+          //println(res(0).keys())
+          //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
+          //println(comps)
 
 
           for (i1 <- res.indices) {
@@ -119,8 +119,8 @@ object TestClassifier {
 
               val pr1 = res(i1).property("component")
               val pr2 = res(j1).property("component")
-              println("component", pr1, pr2)
-              println("ed_val", ed_val)
+              //println("component", pr1, pr2)
+              //println("ed_val", ed_val)
               if (pr1 == pr2
                 && ed_val == 0) {
                 FP_g += 1
