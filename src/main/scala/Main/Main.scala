@@ -121,19 +121,14 @@ object Main extends App {
   //println(Calendar.getInstance().getTime())
   //println()
 
-  //TestClassifier.test(svmachine, articlesTest, answersSetTest, initFN, "SVM")
-  //println(Calendar.getInstance().getTime())
-  //println()
-
-
-
-
-
   TestClassifier.test(forest, articlesTest, answersSetTest, initFN, "forest")
   println(Calendar.getInstance().getTime())
   println()
 
 
+  TestClassifier.test(svmachine, articlesTest, answersSetTest, initFN, "SVM")
+  println(Calendar.getInstance().getTime())
+  println()
 
 
 
