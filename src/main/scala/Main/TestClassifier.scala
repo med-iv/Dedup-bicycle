@@ -106,11 +106,35 @@ object TestClassifier {
           */
 
 
-          val res1 = g.withComputer().V().outE().hasLabel("edge1")//.bothV().dedup()
-            .V().connectedComponent()
+          val res1 = g.withComputer().V().outE().hasLabel("edge1")
+            .bothV().dedup()
+            //.V().dedup
+            .connectedComponent()
             .group().by(ConnectedComponent.component)
-          val res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
+          var res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
+
+
+
+          val verts = g.V().select(values).unfold().toList.asInstanceOf[java.util.List[Vertex]]
+          val len = verts.size()
+          for (i <- 0 until len) {
+            var is_vert = 0
+            val vert = verts.get(i)
+            for (k1 <- 0 until res2.size()) {
+              val res = res2.get(k1)
+              for (i1 <- 0 until res.size()) {
+                if (vert.value("number").asInstanceOf[Int] == res.get(i1).value("number").asInstanceOf[Int]){
+                  is_vert = 1
+                }
+              }
+            }
+            if (is_vert == 0) {
+              res2.add(java.util.Arrays.asList(vert))
+            }
+          }
+
           println(res2)
+
           //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           //println(comps)
           //if (comps.size > 1) {
