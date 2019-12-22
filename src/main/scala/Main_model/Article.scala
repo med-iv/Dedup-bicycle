@@ -4,7 +4,8 @@ case class Article( id: String,
                     title: String,
                     authors: Seq[String],
                     year: String,
-                    blockingKey: String)
+                    blockingKey: String,
+                    venue: String)
 /* case class Article(
                     id: Id,
                     title: String,
