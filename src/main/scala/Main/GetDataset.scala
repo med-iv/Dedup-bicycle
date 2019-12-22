@@ -116,6 +116,7 @@ object GetDataset {
           title = row("title"),
           authors = row("authors").split(","),
           year = row("year"),
+          venue = row("venue"),
           blockingKey = row("title").
             replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase())
 
@@ -124,6 +125,7 @@ object GetDataset {
           title = row("title"),
           authors = row("authors").split(","),
           year = row("year"),
+          venue = row("venue"),
           blockingKey = row("title").
             replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase()))
       }
@@ -153,7 +155,8 @@ object GetDataset {
       featuresTrain :+= Array[Double](
         l.distance(article3.title, article2.title),
         jaccard.distance(article3.authors.mkString(","), article2.authors.mkString(",")),
-        l.distance(article3.year, article2.year)
+        l.distance(article3.year, article2.year),
+        l.distance(article3.venue, article2.venue)
       )
       answersTrain :+= 0
     }
