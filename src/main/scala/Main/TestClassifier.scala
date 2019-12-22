@@ -115,7 +115,7 @@ object TestClassifier {
 
 
 
-          val verts = g.V().select(values).unfold().toList.asInstanceOf[java.util.List[Vertex]]
+          val verts = g.V().toList
           val len = verts.size()
           for (i <- 0 until len) {
             var is_vert = 0
