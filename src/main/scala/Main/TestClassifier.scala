@@ -59,7 +59,8 @@ object TestClassifier {
               val feature = Array[Double](
                 l.distance(seq(i).title, seq(j).title),
                 jaccard.distance(seq(i).authors.mkString(","), seq(j).authors.mkString(",")),
-                l.distance(seq(i).year, seq(j).year)
+                l.distance(seq(i).year, seq(j).year),
+                l.distance(seq(i).venue, seq(j).venue)
               )
 
               val answer: Int = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
