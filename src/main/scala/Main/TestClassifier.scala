@@ -112,7 +112,7 @@ object TestClassifier {
             .connectedComponent()
             .group().by(ConnectedComponent.component)
           var res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
-          println(res2)
+          //println(res2)
 
 
           val verts = g.V().toList
@@ -213,16 +213,16 @@ object TestClassifier {
     println(s"TN_g = ${TN_g}")
     println(s"FN_g = ${FN_g}")
     val prec_c = TP_c / (TP_c + FP_c)
-    val rec_c = TP_c / (TP_c + FN_c)
-    val F1_c = 2 * (prec_c * rec_c) / (prec_c + rec_c)
     println(s"precision_c = ${prec_c}")
+    val rec_c = TP_c / (TP_c + FN_c)
     println(s"recall_c = ${rec_c}")
+    val F1_c = 2 * (prec_c * rec_c) / (prec_c + rec_c)
     println(s"F1_c = ${F1_c}")
     val prec_g = TP_g / (TP_g + FP_g)
-    val rec_g = TP_g / (TP_g + FN_g)
-    val F1_g = 2 * (prec_g * rec_g) / (prec_g + rec_g)
     println(s"precision_g = ${prec_g}")
+    val rec_g = TP_g / (TP_g + FN_g)
     println(s"recall_g = ${rec_g}")
+    val F1_g = 2 * (prec_g * rec_g) / (prec_g + rec_g)
     println(s"F1_g = ${F1_g}")
   }
 
