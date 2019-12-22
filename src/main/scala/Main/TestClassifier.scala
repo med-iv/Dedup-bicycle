@@ -110,7 +110,7 @@ object TestClassifier {
             .V().connectedComponent()
             .group().by(ConnectedComponent.component)
           val res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
-          //println(res2)
+          println(res2)
           //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           //println(comps)
           //if (comps.size > 1) {
