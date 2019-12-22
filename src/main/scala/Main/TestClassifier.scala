@@ -116,7 +116,7 @@ object TestClassifier {
 
 
           val verts = g.V().toList
-          println(verts)
+          //println(verts)
           val len = verts.size()
           for (i <- 0 until len) {
             var is_vert = 0
@@ -134,7 +134,7 @@ object TestClassifier {
             }
           }
 
-          println(res2)
+          //println(res2)
 
           //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           //println(comps)
@@ -162,10 +162,10 @@ object TestClassifier {
                 //println("ed_val", ed_val)
                 if (ed_val == 0) {
                   FP_g += 1
-                  println("FP_g", FP_g)
+                  //println("FP_g", FP_g)
                 } else if (ed_val == 1) {
                   TP_g += 1
-                  println("TP_g", TP_g)
+                  //println("TP_g", TP_g)
                 }
               }
             }
