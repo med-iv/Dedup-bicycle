@@ -44,7 +44,7 @@ object TestClassifier {
         k += 1
 
         if (seq.length > 1) {
-          println(s"${key} = ${k}", seq.length)
+          //println(s"${key} = ${k}", seq.length)
           val graph = TinkerGraph.open()
           val g = graph.traversal()
           for (i <- seq.indices) {
@@ -77,7 +77,7 @@ object TestClassifier {
                 val edge12 = g.addE("edge0").property("answer",
                   answer).from(v1).to(v2).next()
                 //println(edge12)
-                println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+                //println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
                 //g.tx.commit()
               }
 
@@ -189,10 +189,10 @@ object TestClassifier {
                   val ed_val: Int = edge.value("answer").asInstanceOf[Int]
                   if (ed_val == 1) {
                     FN_g += 1
-                    println("FN_g", FN_g)
+                    //println("FN_g", FN_g)
                   } else if (ed_val == 0){
                     TN_g += 1
-                    println("TN_g", TN_g)
+                    //println("TN_g", TN_g)
                   }
                 }
               }
