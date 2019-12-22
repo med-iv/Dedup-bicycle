@@ -121,10 +121,11 @@ object TestClassifier {
           for (i <- 0 until len) {
             var is_vert = 0
             val vert = verts.get(i)
-            println(vert.valueMap)
             for (k1 <- 0 until res2.size()) {
               val res = res2.get(k1)
               for (i1 <- 0 until res.size()) {
+                println(vert.valueMap)
+                println(res.get(i1).valueMap)
                 if (vert.value("number").asInstanceOf[Int] == res.get(i1).value("number").asInstanceOf[Int]){
                   is_vert = 1
                 }
