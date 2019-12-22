@@ -148,13 +148,13 @@ object TestClassifier {
             val res = res2.get(k1)
             for (i1 <- 0 until res.size()) {
               for (j1 <- i1 + 1 until res.size()) {
-                val edge: Edge = g.V().has("number", res.get(i1).value("number").asInstanceOf[Int])
+                val edge: Edge = g.V(res.get(i1).id)
                   .outE().as("ed")
-                  .inV().has("number", res.get(j1).value("number").asInstanceOf[Int]).select("ed")
+                  .select("ed")
                   .headOption().asInstanceOf[Option[Edge]]
-                  .getOrElse(g.V().has("number", res.get(j1).value("number").asInstanceOf[Int])
+                  .getOrElse(g.V(res.get(j1).id)
                     .outE().as("ed")
-                    .inV().has("number", res.get(i1).value("number").asInstanceOf[Int]).select("ed")
+                    .select("ed")
                     .head().asInstanceOf[Edge])
 
                 val ed_val: Int = edge.value("answer").asInstanceOf[Int]
