@@ -106,7 +106,8 @@ object TestClassifier {
           */
 
 
-          val res1 = g.withComputer().V().outE().hasLabel("edge1").bothV().dedup().connectedComponent()
+          val res1 = g.withComputer().V().outE().hasLabel("edge1")//.bothV().dedup()
+            .V().connectedComponent()
             .group().by(ConnectedComponent.component)
           val res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
           //println(res2)
@@ -144,6 +145,7 @@ object TestClassifier {
               }
             }
           }
+
           for (i1 <- 0 until res2.size()) {
             val tmp1 = res2.get(i1)
             for (j1 <-  i1 + 1 until res2.size) {
