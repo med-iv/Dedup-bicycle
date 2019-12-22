@@ -107,7 +107,7 @@ object TestClassifier {
 
           val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent()
             .group().by(ConnectedComponent.component)
-            .select(values).unfold().toList
+            .select(values).unfold().dedup.toList
           println(res)
           //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           //println(comps)
