@@ -123,6 +123,7 @@ object TestClassifier {
             val vert = verts.get(i)
             for (k1 <- 0 until res2.size()) {
               val res = res2.get(k1)
+              println(res)
               for (i1 <- 0 until res.size()) {
                 println(vert.valueMap)
                 println(res.get(i1).valueMap)
