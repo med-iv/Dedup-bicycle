@@ -50,7 +50,7 @@ object TestClassifier {
           for (i <- seq.indices) {
 
             g.addV("myvertex").property("number", i).next()
-            g.tx.commit()
+            //g.tx.commit()
           }
 
 
@@ -72,13 +72,13 @@ object TestClassifier {
                 val edge12 = g.addE("edge1").property("answer",
                   answer).from(v1).to(v2).next()
                 //println(edge12)
-                g.tx.commit()
+                //g.tx.commit()
               } else {
                 val edge12 = g.addE("edge0").property("answer",
                   answer).from(v1).to(v2).next()
                 //println(edge12)
                 println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
-                g.tx.commit()
+                //g.tx.commit()
               }
 
               if (answer == 0 && classifier.predict(feature) == 0) {
