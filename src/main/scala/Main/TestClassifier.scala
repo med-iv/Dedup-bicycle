@@ -105,7 +105,7 @@ object TestClassifier {
           */
 
 
-          val res = g.withComputer().V().connectedComponent()
+          val res = g.withComputer().V().outE().hasLabel("edge1").bothV().connectedComponent()
             .group().by(ConnectedComponent.component)
             .select(values).unfold().toList.asScala.toList.asInstanceOf[List[List[Vertex]]]
           println(res)
