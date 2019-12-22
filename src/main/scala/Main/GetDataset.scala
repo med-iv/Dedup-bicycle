@@ -41,6 +41,7 @@ object GetDataset {
           title = row("title"),
           authors = row("authors").split(","),
           year = row("year"),
+          venue = row("venue"),
           blockingKey = row("title").
             replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase())
 
@@ -48,6 +49,7 @@ object GetDataset {
           title = row("title"),
           authors = row("authors").split(","),
           year = row("year"),
+          venue = row("venue"),
           blockingKey = row("title").
             replaceAll("""[^\p{IsAlphabetic}|\p{IsDigit}]""", "").toUpperCase()))
       }
