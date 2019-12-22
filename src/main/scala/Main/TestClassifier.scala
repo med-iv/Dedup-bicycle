@@ -123,11 +123,8 @@ object TestClassifier {
             val vert = verts.get(i)
             for (k1 <- 0 until res2.size()) {
               val res = res2.get(k1)
-              println(res)
               for (i1 <- 0 until res.size()) {
-                println(vert.id)
-                println(res.get(i1).id)
-                if (vert.value("number").asInstanceOf[Int] == res.get(i1).value("number").asInstanceOf[Int]){
+                if (vert.id == res.get(i1).id){
                   is_vert = 1
                 }
               }
