@@ -14,6 +14,7 @@ import org.apache.tinkerpop.gremlin.process.computer.traversal.step.map.Connecte
 import gremlin.scala._
 import org.janusgraph.core.JanusGraphFactory
 import org.apache.tinkerpop.gremlin.structure.Column.values
+import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph
 
 import scala.collection.JavaConverters._
 
@@ -44,7 +45,7 @@ object TestClassifier {
 
         if (seq.length > 1) {
           println(s"${key} = ${k}", seq.length)
-          val graph = JanusGraphFactory.open("inmemory")
+          val graph = TinkerGraph.open()
           val g = graph.traversal()
           for (i <- seq.indices) {
 
