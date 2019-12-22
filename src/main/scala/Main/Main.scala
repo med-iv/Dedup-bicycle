@@ -54,7 +54,8 @@ object Main extends App {
         featuresTrain :+= Array[Double](
           l.distance(article1.title, article2.title),
           jaccard.distance(article1.authors.mkString(","), article2.authors.mkString(",")),
-          l.distance(article1.year, article2.year)
+          l.distance(article1.year, article2.year),
+          l.distance(article1.venue, article2.venue)
         )
         answersTrain :+= {if (answersSetTrain.get(key1).isDefined && answersSetTrain(key1) == key2) 1 else 0}
       }
