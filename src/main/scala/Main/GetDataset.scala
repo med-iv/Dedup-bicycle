@@ -162,6 +162,17 @@ object GetDataset {
         l.distance(article3.venue, article2.venue)
       )
       answersTrain :+= 0
+
+      val article4: Article = res1(ans(i + 1)(0))
+      featuresTrain :+= Array[Double](
+        l.distance(article1.title, article4.title),
+        jaccard.distance(article1.authors.mkString(","), article4.authors.mkString(",")),
+        l.distance(article1.year, article4.year),
+        l.distance(article1.venue, article4.venue)
+      )
+      answersTrain :+= 0
+
+
     }
 
 
