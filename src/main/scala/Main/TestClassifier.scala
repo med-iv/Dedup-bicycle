@@ -43,7 +43,7 @@ object TestClassifier {
         k += 1
 
         if (seq.length > 1) {
-          //println(s"${key} = ${k}", seq.length)
+          println(s"${key} = ${k}", seq.length)
           val graph = JanusGraphFactory.open("inmemory")
           val g = graph.traversal()
           for (i <- seq.indices) {
