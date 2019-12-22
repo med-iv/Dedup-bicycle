@@ -108,51 +108,69 @@ object TestClassifier {
 
           val res1 = g.withComputer().V().outE().hasLabel("edge1").bothV().dedup().connectedComponent()
             .group().by(ConnectedComponent.component)
-          val res = res1.select(values).unfold().toList
-          println(res)
+          val res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
+          //println(res2)
           //val comps: Map[VertexProperty[String], List[Vertex]]= res.groupBy(_.property(ConnectedComponent.propertyName))
           //println(comps)
           //if (comps.size > 1) {
             //println("Big size")
           //}
 
-/*
 
-          for (i1 <- res.indices) {
-            for (j1 <- i1 + 1 until res.length) {
-              val edge: Edge = g.V().has("number", res(i1).value("number").asInstanceOf[Int])
-                .outE().as("ed")
-                .inV().has("number", res(j1).value("number").asInstanceOf[Int]).select("ed")
-                .headOption().asInstanceOf[Option[Edge]]
-                .getOrElse(g.V().has("number", res(j1).value("number").asInstanceOf[Int])
-                .outE().as("ed")
-                .inV().has("number", res(i1).value("number").asInstanceOf[Int]).select("ed")
-                  .head().asInstanceOf[Edge])
 
-              val ed_val: Int = edge.value("answer").asInstanceOf[Int]
+          for (k1 <- 0 until res2.size()) {
+            val res = res2.get(k1)
+            for (i1 <- 0 until res.size()) {
+              for (j1 <- i1 + 1 until res.size()) {
+                val edge: Edge = g.V().has("number", res.get(i1).value("number").asInstanceOf[Int])
+                  .outE().as("ed")
+                  .inV().has("number", res.get(j1).value("number").asInstanceOf[Int]).select("ed")
+                  .headOption().asInstanceOf[Option[Edge]]
+                  .getOrElse(g.V().has("number", res.get(j1).value("number").asInstanceOf[Int])
+                    .outE().as("ed")
+                    .inV().has("number", res.get(i1).value("number").asInstanceOf[Int]).select("ed")
+                    .head().asInstanceOf[Edge])
 
-              val pr1 = res(i1).value(ConnectedComponent.propertyName)
-              val pr2 = res(j1).value(ConnectedComponent.propertyName)
-              println("component", pr1, pr2)
-              //println("ed_val", ed_val)
-              if (pr1 == pr2 &&
-                ed_val == 0) {
-                FP_g += 1
-                //println("FP_g", FP_g)
-              } else if (res(i1).value("component") == res(j1).value("component")
-                && ed_val == 1) {
-                TP_g += 1
-                //println("TP_g", TP_g)
-              } else if (res(i1).value("component") != res(j1).value("component")
-                && ed_val == 1) {
-                FN_g += 1
-                //println("FN_g", FN_g)
-              } else {
-                TN_g += 1
-                //println("TN_g", TN_g)
+                val ed_val: Int = edge.value("answer").asInstanceOf[Int]
+
+                //println("ed_val", ed_val)
+                if (ed_val == 0) {
+                  FP_g += 1
+                  println("FP_g", FP_g)
+                } else if (ed_val == 1) {
+                  TP_g += 1
+                  println("TP_g", TP_g)
+                }
               }
             }
-          }*/
+          }
+          for (i1 <- 0 until res2.size()) {
+            val tmp1 = res2.get(i1)
+            for (j1 <-  i1 + 1 until res2.size) {
+              val tmp2 = res2.get(j1)
+              for (i2 <-0 until tmp1.size()) {
+                for (j2 <- 0 until tmp2.size()){
+                  val edge: Edge = g.V().has("number", tmp1.get(i2).value("number").asInstanceOf[Int])
+                    .outE().as("ed")
+                    .inV().has("number", tmp2.get(j2).value("number").asInstanceOf[Int]).select("ed")
+                    .headOption().asInstanceOf[Option[Edge]]
+                    .getOrElse(g.V().has("number", tmp2.get(j2).value("number").asInstanceOf[Int])
+                      .outE().as("ed")
+                      .inV().has("number", tmp1.get(i2).value("number").asInstanceOf[Int]).select("ed")
+                      .head().asInstanceOf[Edge])
+
+                  val ed_val: Int = edge.value("answer").asInstanceOf[Int]
+                  if (ed_val == 1) {
+                    FN_g += 1
+                    println("FN_g", FN_g)
+                  } else if (ed_val == 0){
+                    TN_g += 1
+                    println("TN_g", TN_g)
+                  }
+                }
+              }
+            }
+          }
           graph.close()
         }
       }
