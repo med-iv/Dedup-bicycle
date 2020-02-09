@@ -5,7 +5,7 @@ import java.io.File
 import Main_model.Article
 import com.github.tototoshi.csv.CSVReader
 import com.typesafe.config.ConfigFactory
-import info.debatty.java.stringsimilarity.{Jaccard, NormalizedLevenshtein}
+import info.debatty.java.stringsimilarity.{Jaccard, JaroWinkler, Levenshtein, NormalizedLevenshtein}
 
 
 //XXX Говнокод
@@ -79,7 +79,7 @@ object GetDataset {
 
 
 
-    (res1, res2, res_ans, resSeq, 2390)
+    (res1, res2, res_ans, resSeq, 0)
   }
 
 
@@ -103,8 +103,9 @@ object GetDataset {
     var featuresTrain: Array[Array[Double]] = Array()
     var answersTrain: Array[Int] = Array()
 
-    val l = new NormalizedLevenshtein()
+    val l = new Levenshtein()
     val jaccard = new Jaccard()
+    val jarowink = new JaroWinkler()
 
     var resSeq: Seq[Article] = Seq() // последовательность id статей, как они в табличке идут
     var res_ans: Map[String, String] = Map()
@@ -140,43 +141,76 @@ object GetDataset {
     val res2: Map[String, Article] = mapToArticle(d2)
 
 
+    res_ans += (ans(ans.length - 1)(1) -> ans(ans.length - 1)(0))
+    res_ans += (ans(ans.length - 1)(0) -> ans(ans.length - 1)(0))
 
     for (i <-1 until ans.length - 1) {
-      //res_ans += (ans(i)(1) -> ans(i)(0))
-      //res_ans += (ans(i)(0) -> ans(i)(0))
+      res_ans += (ans(i)(1) -> ans(i)(0))
+      res_ans += (ans(i)(0) -> ans(i)(0))
       val article1: Article = res1(ans(i)(1))
       //println(i, article1.title)
       val article2: Article = res2(ans(i)(0))
+      println(article1, article2)
       featuresTrain :+= Array[Double](
-        l.distance(article1.title, article2.title),
-        jaccard.distance(article1.authors.mkString(","), article2.authors.mkString(",")),
+        //l.distance(article1.title, article2.title),
+        //l.distance(article1.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
         l.distance(article1.year, article2.year),
-        l.distance(article1.venue, article2.venue)
+        //l.distance(article1.venue, article2.venue),
+        jaccard.distance(article1.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
+        //jarowink.distance(article1.title, article2.title),
+        jarowink.distance(article1.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
+        jarowink.distance(article1.year, article2.year)
+        //jarowink.distance(article1.venue, article2.venue)
       )
       answersTrain :+= 1
+      featuresTrain.last.foreach(x => print(s" $x"))
+      print(" ")
+      println(answersTrain.last)
+
       val article3: Article = res1(ans(i + 1)(1))
       featuresTrain :+= Array[Double](
-        l.distance(article3.title, article2.title),
-        jaccard.distance(article3.authors.mkString(","), article2.authors.mkString(",")),
+        //l.distance(article3.title, article2.title),
+        //l.distance(article3.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
         l.distance(article3.year, article2.year),
-        l.distance(article3.venue, article2.venue)
+        //l.distance(article3.venue, article2.venue),
+        jaccard.distance(article3.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
+        //jarowink.distance(article3.title, article2.title),
+        jarowink.distance(article3.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
+        jarowink.distance(article3.year, article2.year)
+        //jarowink.distance(article3.venue, article2.venue)
       )
       answersTrain :+= 0
+      println(article2, article3)
+      featuresTrain.last.foreach(x => print(s" $x"))
+      print(" ")
+      println(answersTrain.last)
+      println(article2, article3)
 
       val article4: Article = res2(ans(i + 1)(0))
       featuresTrain :+= Array[Double](
-        l.distance(article1.title, article4.title),
-        jaccard.distance(article1.authors.mkString(","), article4.authors.mkString(",")),
+        //l.distance(article1.title, article4.title),
+        //l.distance(article1.authors.sorted.mkString(","), article4.authors.sorted.mkString(",")),
         l.distance(article1.year, article4.year),
-        l.distance(article1.venue, article4.venue)
+        //l.distance(article1.venue, article4.venue),
+        jaccard.distance(article1.authors.sorted.mkString(","), article4.authors.sorted.mkString(",")),
+        //jarowink.distance(article1.title, article4.title),
+        jarowink.distance(article1.authors.sorted.mkString(","), article4.authors.sorted.mkString(",")),
+        jarowink.distance(article1.year, article4.year)
+        //jarowink.distance(article1.venue, article4.venue)
       )
       answersTrain :+= 0
+      println(article1, article4)
+      featuresTrain.last.foreach(x => print(s" $x"))
+      print(" ")
+      println(answersTrain.last)
+
+
 
 
     }
 
 
-    (//res1, res2, res_ans, resSeq,
+    (res1, res2, res_ans, resSeq,
       featuresTrain, answersTrain)
   }
 }

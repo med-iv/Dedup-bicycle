@@ -1,7 +1,7 @@
 package Main
 
 import Main_model.Article
-import info.debatty.java.stringsimilarity.{Jaccard, NormalizedLevenshtein}
+import info.debatty.java.stringsimilarity.{Jaccard, NormalizedLevenshtein, Levenshtein, JaroWinkler}
 import smile.classification.Classifier
 import org.graphframes.GraphFrame
 import org.apache.tinkerpop.gremlin.structure.{Graph, VertexProperty}
@@ -20,8 +20,9 @@ import scala.collection.JavaConverters._
 
 
 object TestClassifier {
-  val l = new NormalizedLevenshtein()
+  val l = new Levenshtein()
   val jaccard = new Jaccard()
+  val jarowink = new JaroWinkler()
 
   def test(classifier: Classifier[Array[Double]], articlesTest: Map[String, Seq[Article]], answersSetTest: Map[String, String],
            Init_FN:Int, name: String) =
@@ -49,52 +50,46 @@ object TestClassifier {
           val g = graph.traversal()
           for (i <- seq.indices) {
 
-            g.addV("myvertex").property("number", i).next()
+            g.addV("article").property("number", i).next()
             //g.tx.commit()
           }
 
 
-          for (i <- seq.indices) {
-            for (j <- i + 1 until seq.length) {
-              val feature = Array[Double](
-                l.distance(seq(i).title, seq(j).title),
-                jaccard.distance(seq(i).authors.mkString(","), seq(j).authors.mkString(",")),
-                l.distance(seq(i).year, seq(j).year),
-                l.distance(seq(i).venue, seq(j).venue)
-              )
+          for (i <- seq.indices; j <- i + 1 until seq.length) {
+            val feature = Array[Double](
+              //l.distance(seq(i).title, seq(j).title),
+              //l.distance(seq(i).authors.sorted.mkString(","), seq(j).authors.sorted.mkString(",")),
+              l.distance(seq(i).year, seq(j).year),
+              //l.distance(seq(i).venue, seq(j).venue),
+              jaccard.distance(seq(i).authors.sorted.mkString(","), seq(j).authors.sorted.mkString(",")),
+              //jarowink.distance(seq(i).title, seq(j).title),
+              jarowink.distance(seq(i).authors.sorted.mkString(","), seq(j).authors.sorted.mkString(",")),
+              jarowink.distance(seq(i).year, seq(j).year)
+              //jarowink.distance(seq(i).venue, seq(j).venue)
+            )
 
-              val answer: Int = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
-                && answersSetTest.get(seq(i).id).isDefined) 1 else 0
+            val answer: Int = if (answersSetTest.get(seq(i).id) == answersSetTest.get(seq(j).id)
+              && answersSetTest.get(seq(i).id).isDefined) 1 else 0
 
-              val v1 = g.V().has("myvertex", "number", i).head
-              val v2 = g.V().has("myvertex", "number", j).head
+            val v1 = g.V().has("article", "number", i).head
+            val v2 = g.V().has("article", "number", j).head
 
-              if (classifier.predict(feature) == 1) {
-                val edge12 = g.addE("edge1").property("answer",
-                  answer).from(v1).to(v2).next()
-                //println(edge12)
-                //g.tx.commit()
-              } else {
-                val edge12 = g.addE("edge0").property("answer",
-                  answer).from(v1).to(v2).next()
-                //println(edge12)
-                //println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
-                //g.tx.commit()
-              }
+            if (classifier.predict(feature) == 1) {
+              val edge12 = g.addE("edge1").property("answer",
+                answer).from(v1).to(v2).next()
+            } else {
+              val edge12 = g.addE("edge0").property("answer",
+                answer).from(v1).to(v2).next()
+            }
 
-              if (answer == 0 && classifier.predict(feature) == 0) {
-                TN_c += 1
-                //println("TN_c", TN_c)
-              } else if (answer == 0 && classifier.predict(feature) == 1) {
-                FP_c += 1
-                //println("FP_c", FP_c)
-              } else if (answer == 1 && classifier.predict(feature) == 0) {
-                FN_c += 1
-                //println("FN_c", FN_c)
-              } else {
-                TP_c += 1
-                //println("TP_c", TP_c)
-              }
+            if (answer == 0 && classifier.predict(feature) == 0) {
+              TN_c += 1
+            } else if (answer == 0 && classifier.predict(feature) == 1) {
+              FP_c += 1
+            } else if (answer == 1 && classifier.predict(feature) == 0) {
+              FN_c += 1
+            } else {
+              TP_c += 1
             }
           }
 
@@ -107,13 +102,13 @@ object TestClassifier {
           */
 
 
-          val res1 = g.withComputer().V().outE().hasLabel("edge1")
-            .bothV().dedup()
-            //.V().dedup
-            .connectedComponent()
-            .group().by(ConnectedComponent.component)
-          var res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
-          //println(res2)
+        val res1 = g.withComputer().V().outE().hasLabel("edge1")
+          .bothV().dedup()
+          //.V().dedup
+          .connectedComponent()
+          .group().by(ConnectedComponent.component)
+        var res2 = res1.select(values).unfold().toList.asInstanceOf[java.util.List[java.util.List[Vertex]]]
+        //println(res2)
 
 
           val verts = g.V().toList
