@@ -1,173 +1,163 @@
 package Main
 
 import com.github.tototoshi.csv._
-import java.io.File
+import java.io._
 
 import Main_model.Article
-import com.typesafe.config.ConfigFactory
-import smile.classification.SVM
+import smile.classification.{Classifier, LogisticRegression, SVM}
 import smile.math.kernel.LinearKernel
-
-import scala.concurrent._
-import scala.concurrent.forkjoin._
-import ExecutionContext.Implicits.global
-
-//import Preprocessing
+import info.debatty.java.stringsimilarity.{Cosine, Jaccard, JaroWinkler, Levenshtein, NormalizedLevenshtein}
+import smile.classification.{adaboost, cart, gbm, lda, logit, randomForest, svm}
+import smile.validation.{Accuracy, FMeasure, Recall, cv}
+import smile.plot.plot
+import java.util.Calendar
 
 object Main extends App {
+  //System.setOut(new PrintStream(new FileOutputStream("/home/ivan/Desktop/file.out")))
 
-  val conf = ConfigFactory.load()
+  println("\nRunning...")
+  println(Calendar.getInstance().getTime())
+  println()
 
-  //println("Choose datasets:")
+  var featuresTrain: Array[Array[Double]] = Array()
+  var answersTrain: Array[Int] = Array()
 
-  //val datasets = Map(0 -> "DBLP-Scholar", 1 -> "DBLP-ACM")
-  //datasets.foreach{case(key, value) => println(s"[$key] $value")}
-
-  val numb = 0 //scala.io.StdIn.readInt()
-  println("Running...")
-
-  val (dataset1: Map[String, Article], dataset2: Map[String, Article], answersSet: Map[String, String], idSeq: Seq[String]) = {
-
-    val (path1: String, path2: String, pathAnswers: String) = numb match {
-      case 0 => (conf.getConfig("DBLP-Scholar").getString("ACM"),
-        conf.getConfig("DBLP-Scholar").getString("Scholar"),
-        conf.getConfig("DBLP-Scholar").getString("Answers"))
-      case _ => ("", "", "")
-    }
-
-    val reader1 = CSVReader.open(new File(path1))
-    val reader2 = CSVReader.open(new File(path2))
-    val readerAnswers = CSVReader.open(new File(pathAnswers))
-
-    val d1 = reader1.allWithHeaders()
-    val d2 = reader2.allWithHeaders()
-
-    val ans = readerAnswers.all()
-
-    var resIdSeq: Seq[String] = Seq()
-    var res_ans: Map[String, String] = Map()
-    for (i <-1 until ans.length) {
-      res_ans += (ans(i)(1) -> ans(i)(0))
-      resIdSeq :+= ans(i)(1)
-    }
+  val (acmTrain: Map[String, Article], dblp2Train: Map[String, Article],
+       answersSetTrain: Map[String, String], articleSeqPreTrain: Seq[Article],
+        featuresTrain1: Array[Array[Double]], answersTrain1: Array[Int]) = GetDataset.getACM()
 
 
-    def mapToArticle(d: List[Map[String, String]]): Map[String, Article] = {
-      var res: Map[String, Article] = Map()
-      for (row <- d) {
-        res += (row("id") -> Article(id = row("id"),
-          title = row("title"),
-          authors = row("authors").split(","),
-          venue = row("venue"),
-          year = row("year"),
-          blockingKey = row("title").replaceAll("\\s", "").toLowerCase))
+  val (dblp1Test: Map[String, Article], scholarTest: Map[String, Article],
+  answersSetTest: Map[String, String], articleSeqTest: Seq[Article], initFN: Int) = GetDataset.getScholar()
+
+  println(s"initFN = ${initFN}")
+
+  println("\nLoading done")
+  println(Calendar.getInstance().getTime())
+  println()
+
+
+
+  val l = new Levenshtein()
+  val jaccard = new Jaccard()
+  val jarowink = new JaroWinkler()
+
+
+
+  try {
+    var i: Int = 0
+    for ((key1, article1) <- acmTrain) {
+      for ((key2, article2) <- dblp2Train) {
+        featuresTrain :+= Array[Double](
+        //l.distance(article1.title, article2.title),
+         // l.distance(article1.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
+          l.distance(article1.year, article2.year),
+          //l.distance(article1.venue, article2.venue),
+          jaccard.distance(article1.authors.mkString(","), article2.authors.mkString(",")),
+          //jarowink.distance(article1.title, article2.title),
+          jarowink.distance(article1.authors.sorted.mkString(","), article2.authors.sorted.mkString(",")),
+          jarowink.distance(article1.year, article2.year)
+          //jarowink.distance(article1.venue, article2.venue)
+        )
+        answersTrain :+= {if (answersSetTrain.get(key1).isDefined && answersSetTrain(key1) == key2) 1 else 0}
       }
-      res
     }
-
-    val res1: Map[String, Article] = mapToArticle(d1)
-    val res2: Map[String, Article] = mapToArticle(d2)
-
-
-    (res1, res2, res_ans, resIdSeq)
+  } catch {
+    case e => println(e.toString)
   }
 
+  println(featuresTrain.length)
+  println(answersTrain.length)
 
-  /*val Blocks = {
-    import Blocking.Blocker_standart
-    val Blocker = new Blocker_standart
-    Blocker.createBlocks(dataset2)
-  }*/
-
-  /*
- // for ((blockingKey, articles) <- Blocks) {
-  //val f = Future {
-  val articles = dataset2
-  import info.debatty.java.stringsimilarity.{Levenshtein, Jaccard, Cosine}
-  import smile.classification.{svm, lda, cart, logit}
-  import smile.validation.cv
-
-  val l = new Levenshtein()
-  val jaccard = new Jaccard()
-
-  var features: Array[Array[Double]] = Array()
-  var answers: Array[Int] = Array()
-  for (/*i <- articles.indices*/ i <- 0 until 3000) {
-    for (j <- i + 1 until /*articles.length*/ 3000) {
-      println(i, j)
-      features :+= /*Main_model.Pair*/Array[Double](
-        /*title_dist = */l.distance(articles(i).title, articles(j).title),
-        /*authors_dist = */jaccard.distance(articles(i).authors.mkString(","),
-          articles(j).authors.mkString(",")),
-        /*venue_dist = */l.distance(articles(i).venue, articles(j).venue),
-        /*year_dist = */l.distance(articles(i).year, articles(j).year)
-      )
-      answers :+= (if ( answersSet.get(articles(i).id) == answersSet.get(articles(j).id)
-        && answersSet.get(articles(i).id).isDefined) 1 else 0)
-    }
-  }
-
-  println("graphics")
-  import smile.plot._
+  println("\nAdding features for training done")
+  println(Calendar.getInstance().getTime())
+  println()
 
 
-  //plot(features(), '*')
+/*  val logreg: LogisticRegression = logit(featuresTrain, answersTrain)
+  println("Logreg training done")
+  println(Calendar.getInstance().getTime())
+  println()
+
+
+  val oos0 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/logreg.out"))
+  oos0.writeObject(logreg)
+*/
+
+/*
+  val svmachine = svm[Array[Double]](featuresTrain, answersTrain, new LinearKernel(), 0.1)
+  println("SVM training done")
+  println(Calendar.getInstance().getTime())
+  println()
+
+   val oos1 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/svm.out"))
+   oos1.writeObject(svmachine)
+
+*/
+
+  //cv(featuresTrain, answersTrain, 2, new Accuracy, new Recall, new FMeasure) {case (x: Array[Array[Double]], y: Array[Int]) =>
+    //svm[Array[Double]](x, y, new LinearKernel(), 0.1)}
 
 
 
-  println("CV")
-   */
-  //for (elem <- answers) { println(elem) }
-      //val classifier =
-  //cv(features, answers, 2) {case (x, y) =>
-    //    svm[Array[Double]](x, y, new LinearKernel(), 0.1)}
-        //logit(x, y)}
+  //val ois0 = new ObjectInputStream(new FileInputStream("src/main/resources/svm.out"))
+  //val svmachine: SVM[Array[Double]] = ois0.readObject.asInstanceOf[SVM[Array[Double]]]
 
-    //}
+  //val ois1 = new ObjectInputStream(new FileInputStream("src/main/resources/logreg.out"))
+  //val logreg: LogisticRegression = ois1.readObject.asInstanceOf[LogisticRegression]
 
+  val am_trees = 2100
 
+  val forest =  randomForest(featuresTrain, answersTrain, ntrees = am_trees)
 
-
-  /*
-
-
-
-  val n: Int = 1000 //  n object pairs are randomly
-  //selected among the ones satisfying a given minimal
-  //threshold t applying a similarity measure m.
-  val treshold: Double = 0.6
-
- */
+  println("Random forest training done")
+  println(Calendar.getInstance().getTime())
+  println()
+  val oos2 = new ObjectOutputStream(new FileOutputStream("/home/ivan/Desktop/forest.out"))
+  oos2.writeObject(forest)
+ 
 
 
-  val articles = dataset2
-  import info.debatty.java.stringsimilarity.{Levenshtein, Jaccard, Cosine}
-  import smile.classification.{svm, lda, cart, logit}
-  import smile.validation.{cv, FMeasure, Accuracy, Recall}
 
-  val l = new Levenshtein()
-  val jaccard = new Jaccard()
+  val articlesTest: Map[String, Seq[Article]] = articleSeqTest.groupBy(_.blockingKey)
 
-  var features: Array[Array[Double]] = Array()
-  var answers: Array[Int] = Array()
+  //TestClassifier.test(logreg, articlesTest, answersSetTest, initFN, "Logreg")
+  //println(Calendar.getInstance().getTime())
+  //println()
 
-  for (i <- 0 to 1000) {
-    for (j <- i to 1000) {
-      println(i, j)
-      features :+= /*Main_model.Pair*/Array[Double](
-        /*title_dist = */l.distance(articles(idSeq(i)).title, articles(idSeq(j)).title),
-        /*authors_dist = */l.distance(articles(idSeq(i)).authors.mkString(","),
-          articles(idSeq(j)).authors.mkString(",")),
-        /*venue_dist = */l.distance(articles(idSeq(i)).venue, articles(idSeq(j)).venue),
-        /*year_dist = */l.distance(articles(idSeq(i)).year, articles(idSeq(j)).year)
-      )
-      answers :+= (if ( answersSet.get(articles(idSeq(i)).id) == answersSet.get(articles(idSeq(j)).id)
-        && answersSet.get(articles(idSeq(i)).id).isDefined) 1 else 0)
-    }
-  }
-  //answers.foreach(println)
+  TestClassifier.test(forest, articlesTest, answersSetTest, initFN, "forest")
+  println(Calendar.getInstance().getTime())
+  println()
 
-  println("CV")
-  cv(features, answers, 10, new Accuracy, new Recall, new FMeasure) {case (x: Array[Array[Double]], y: Array[Int]) =>
-      svm[Array[Double]](x, y, new LinearKernel(), 0.1)}
+
+  //TestClassifier.test(svmachine, articlesTest, answersSetTest, initFN, "SVM")
+  //println(Calendar.getInstance().getTime())
+  //println()
+
+
+  val ada = adaboost(featuresTrain, answersTrain, ntrees = am_trees)
+
+  println("Ada training done")
+  println(Calendar.getInstance().getTime())
+  println()
+
+  TestClassifier.test(ada, articlesTest, answersSetTest, initFN, "ada")
+  println(Calendar.getInstance().getTime())
+  println()
+
+    val gbt = gbm(featuresTrain, answersTrain, ntrees = am_trees)
+
+  println("gbt training done")
+  println(Calendar.getInstance().getTime())
+  println()
+
+  TestClassifier.test(gbt, articlesTest, answersSetTest, initFN, "gbt")
+  println(Calendar.getInstance().getTime())
+  println()
+
+
+
+  //plot(features.map{x => Array(x(0), x(1))}, answers, svmachine)
+
+
 }

@@ -1,5 +1,0 @@
-package Training
-
-class SVMtrainer {
-
-}
